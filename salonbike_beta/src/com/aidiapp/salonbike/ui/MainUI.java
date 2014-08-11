@@ -1,4 +1,9 @@
-package com.aidiapp.salonbike;
+package com.aidiapp.salonbike.ui;
+
+import com.aidiapp.salonbike.R;
+import com.aidiapp.salonbike.R.id;
+import com.aidiapp.salonbike.R.layout;
+import com.aidiapp.salonbike.R.menu;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
