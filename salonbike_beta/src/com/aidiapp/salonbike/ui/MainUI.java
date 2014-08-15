@@ -1,16 +1,16 @@
 package com.aidiapp.salonbike.ui;
 
-import com.aidiapp.salonbike.R;
-import com.aidiapp.salonbike.R.id;
-import com.aidiapp.salonbike.R.layout;
-import com.aidiapp.salonbike.R.menu;
 
-import android.support.v7.app.ActionBarActivity;
+
+
+import com.aidiapp.salonbike.R;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainUI extends ActionBarActivity {
+public class MainUI extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
