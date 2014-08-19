@@ -1,56 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SalOnByke</string>
+    <string name="app_name">SalOnBike</string>
     <string name="servicio_localizacion">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
-    <string name="dialog_bikes_stations">Mostrar Intercambiadores</string><string name="dialog_route_nearest">Ruta estación más próxima</string>
-    
-    
-    <string name="dialog_detail_station_locks">Candados disponibles</string><string name="dialog_detail_station_bykes">Bicis disponibles</string><string name="dialog_detail_station_length">Distancia hasta estación</string><string name="dialog_detail_line_lenght">Longitud del carril</string><string name="dialog_detail_line_population">Bicis disponibles</string>
+    <string name="dialog_bikes_stations">Mostrar Intercambiadores</string>
+    <string name="dialog_route_nearest">Ruta estación más próxima</string> 
+    <string name="dialog_detail_station_locks">Candados disponibles</string>
+    <string name="dialog_detail_station_bikes">Bicis disponibles</string>
+    <string name="dialog_detail_station_length">Distancia hasta estación</string>
+    <string name="dialog_detail_line_lenght">Longitud del carril</string>
+    <string name="dialog_detail_line_population">Bicis disponibles</string>
     <string name="dialog_route">Ruta</string>
     <string name="settings">Configuración</string>
     <string name="actions">Opciones</string>
-    <string-array name="settings_options">
-        <item >Alertas</item>
-        <item >Utilidades</item>
-        <item >Mis POInodes s</item>
-        <item >Mis retos</item>
-    </string-array>
-    <string-array name="actions_options">
-        <item >Intercambiadores</item>
-        <item >Carril bici</item>
-    </string-array>
-    <string-array name="bykes_stations">
-        <item >Plaza Poeta Iglesias</item>
-        <item >Plaza de los Bandos</item>
-        <item >Puente Romano</item>
-        <item >Nuevo Parking Hospital</item>
-        <item >Barrio San José (Junto Caja España-Duero)</item>
-        <item >Tejares (Junto a Caja España-Duero)</item>
-        <item >Parque Calle la Bañeza</item>
-        <item >María Auxiliadora (Corte Inglés)</item>
-        <item >Estación de Trenes (Centro Vialia)</item>
-        <item >Estación de Autobuses</item>
-        <item >Plaza Iglesia Pizarrales</item>
-        <item >Calle La Marina (Parque Jesuitas)</item>
-        <item >Campus Unamuno</item>
-        <item >Plaza La Merced (Campus Ciencias)</item>
-        <item >Ciudad Jardín (Campus Claretianos)</item>
-        <item >Barrio de la Prosperidad (Frente nuevo Edificio JCyL)</item>
-        <item >Zurgüen</item>
-        <item >Huerta Otea</item>
-        <item >Glorieta Castilla-León</item>
-        <item >Glorieta Alto del Rollo</item>
-        <item >Av. Federico Anaya con C/ Los Tilos</item>
-    </string-array>
-    <string-array name="bykes_line_zones">
-        <item >Garrido Norte</item>
-        <item >Alamedilla - Aldehuela</item>
-        <item >Santa Marta</item>
-        <item >Paseo Fluvial - Zurguen</item>
-        <item >Campus Unamuno - Villamayor</item>
-        <item >Ctra. Madrid - Aldeatejada</item>
-    </string-array>
+    <string name="menu_alerts">Alertas</string>
+    <string name="menu_utilities">Utilidades</string>
+    <string name="menu_poi_interest">Mis POInodes s</string>
+    <string name="menu_challenge">Mis retos</string>
+    <string name="menu_options_station">Intercambiadores</string>
+    <string name="menu_options_lines">Carril bici</string>        
     <string name="action_settings">settings</string>
 
 </resources>
