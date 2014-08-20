@@ -4,13 +4,16 @@
     <string name="app_name">SalOnBike</string>
     <string name="servicio_localizacion">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
     <string name="dialog_bikes_stations">Mostrar Intercambiadores</string>
-    <string name="dialog_route_nearest">Ruta estación más próxima</string> 
-    <string name="dialog_detail_station_locks">Candados disponibles</string>
-    <string name="dialog_detail_station_bikes">Bicis disponibles</string>
-    <string name="dialog_detail_station_length">Distancia hasta estación</string>
-    <string name="dialog_detail_line_lenght">Longitud del carril</string>
-    <string name="dialog_detail_line_population">Bicis disponibles</string>
+    <string name="dialog_route_nearest">Ruta estación más próxima</string>
+    <string name="dialog_station_nearest">Distancia a estación:</string>  
+    <string name="dialog_detail_station_locks">Candados disponibles:</string>
+    <string name="dialog_detail_favorite_station">Favoritos</string>
+    <string name="dialog_detail_station_bikes">Bicis disponibles:</string>
+    <string name="dialog_detail_station_length">Distancia hasta estación;</string>
+    <string name="dialog_detail_line_lenght">Longitud del carril:</string>
+    <string name="dialog_detail_line_population">Bicis en tránsito:</string>
     <string name="dialog_route">Ruta</string>
+    <string name="dialog_challenge">Reto</string>
     <string name="settings">Configuración</string>
     <string name="actions">Opciones</string>
     <string name="menu_alerts">Alertas</string>
@@ -20,5 +23,10 @@
     <string name="menu_options_station">Intercambiadores</string>
     <string name="menu_options_lines">Carril bici</string>        
     <string name="action_settings">settings</string>
+    <string name="button_ok">OK</string>
+    <string name="english_language">Choose Language</string>
+    <string name="spanish_language">Seleccionar Idioma</string>
+    <string name="french_language">Choisissez la Langue</string>
+    <string name="german_language">Sprache Wählen</string>
 
 </resources>
