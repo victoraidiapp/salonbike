@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">SalOnBike</string>
-    <string name="servicio_localizacion">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
+    <string name="location_service">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
     <string name="dialog_bikes_stations">Mostrar Intercambiadores</string>
     <string name="dialog_route_nearest">Ruta estación más próxima</string>
     <string name="dialog_station_nearest">Distancia a estación:</string>  
@@ -28,5 +28,8 @@
     <string name="spanish_language">Seleccionar Idioma</string>
     <string name="french_language">Choisissez la Langue</string>
     <string name="german_language">Sprache Wählen</string>
+    <string name="button_back">Volver</string>
+    <string name="bikes_lane">Carriles Bici</string>
+    <string name="bikes_station">Estaciones Bici</string>
 
 </resources>

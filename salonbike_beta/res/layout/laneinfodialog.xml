@@ -7,7 +7,7 @@
     android:layout_gravity="center_vertical"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:background="#E0E6F8"
+    android:background="@drawable/shadow_background"
     android:baselineAligned="false"
     android:fitsSystemWindows="false"
     android:focusable="false"

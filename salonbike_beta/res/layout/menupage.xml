@@ -3,6 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#D8D8D8"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/Button01"
+            style="@android:drawable/btn_default_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_back"
+            android:text="@string/button_back" />
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="160dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:src="@drawable/settings_icon" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#D8D8D8"
+        android:contentDescription="@string/bikes_station"
+        android:freezesText="false"
+        android:paddingBottom="10dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="10dp"
+        android:text="@string/settings"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listView_BikesStation"
+        android:layout_width="match_parent"
+        android:layout_height="126dp" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/title_bikes_station"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#D8D8D8"
+        android:contentDescription="@string/bikes_station"
+        android:freezesText="false"
+        android:paddingBottom="10dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="10dp"
+        android:text="@string/bikes_station"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/ListView01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </LinearLayout>
