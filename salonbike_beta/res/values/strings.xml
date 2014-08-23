@@ -31,5 +31,6 @@
     <string name="button_back">Volver</string>
     <string name="bikes_lane">Carriles Bici</string>
     <string name="bikes_station">Estaciones Bici</string>
-
+    <string name="drawer_open">Menu Abierto</string>
+<string name="drawer_close">Menu Cerrado</string>
 </resources>
