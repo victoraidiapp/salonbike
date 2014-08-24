@@ -17,7 +17,7 @@
 
    
     <style name="salonbikebarra" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-	    <item name="background">@drawable/menubar_shadow</item>
+	    <item name="background">@drawable/menubar</item>
 	    
 	    
 	    

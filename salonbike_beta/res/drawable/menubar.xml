@@ -5,7 +5,7 @@
             <solid android:color="#FFFFFF"/>
         </shape>
     </item>
-<item>
+<!-- <item>
         <shape android:shape="rectangle" >
             <gradient
                 android:angle="270"
@@ -18,5 +18,5 @@
 
             <corners android:radius="0dp" />
         </shape>
-    </item>
+    </item> -->
 </layer-list>

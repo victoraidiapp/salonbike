@@ -5,32 +5,7 @@
     android:layout_gravity="center_vertical"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/header_bikes_station_page"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#D8D8D8"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button_back"
-            style="@android:drawable/btn_default_small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/button_back"
-            android:text="@string/button_back" />
-
-        <ImageView
-            android:id="@+id/image_bikes_lane"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="2"
-            android:src="@drawable/setting_lines_info" />
-
-    </LinearLayout>
+    
 
     <TextView
         android:id="@+id/title_bikes_station"

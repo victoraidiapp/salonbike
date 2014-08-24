@@ -29,16 +29,23 @@
         android:paddingBottom="10dp"
         android:paddingLeft="18dp"
         android:paddingTop="10dp"
-        android:text="@string/settings"
+        android:text="@string/actions"
         android:textColor="@android:color/black"
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <ListView
-        android:id="@+id/listView_BikesStation"
-        android:layout_width="match_parent"
-        android:layout_height="126dp" >
-    </ListView>
+    <TextView
+        android:id="@+id/goToBikesLane"
+        android:layout_height="wrap_content"
+        android:text="@string/bikes_lane"
+        style="@style/menu_page_item" />
+
+    <TextView
+        android:id="@+id/goToBikeStations"
+        
+        android:layout_height="wrap_content"
+        android:text="@string/bikes_station"
+        style="@style/menu_page_item" />
 
     <TextView
         android:id="@+id/title_bikes_station"
@@ -50,7 +57,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="18dp"
         android:paddingTop="10dp"
-        android:text="@string/bikes_station"
+        android:text="@string/settings"
         android:textColor="@android:color/black"
         android:textSize="22sp"
         android:textStyle="bold" />

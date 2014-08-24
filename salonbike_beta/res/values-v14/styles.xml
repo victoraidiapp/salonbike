@@ -17,7 +17,7 @@
 
    
     <style name="salonbikebarra" parent="@style/Widget.AppCompat.Light.ActionBar">
-	    <item name="android:background">@drawable/menubar_shadow</item>
+	    <item name="android:background">@drawable/menubar</item>
 	    
 	    
 	    
