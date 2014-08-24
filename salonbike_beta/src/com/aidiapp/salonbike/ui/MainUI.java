@@ -6,10 +6,16 @@ package com.aidiapp.salonbike.ui;
 
 
 import com.aidiapp.salonbike.R;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
+
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -19,6 +25,7 @@ import android.view.View;
 public class MainUI extends ActionBarActivity {
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private MapManager mapMngr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +53,18 @@ public class MainUI extends ActionBarActivity {
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		/*DECLARAMOS EL MAP FRAGMENT*/
+		GoogleMapOptions mapaOpts=new GoogleMapOptions();
+		LatLng sal=new LatLng(40.9705347,-5.6637995);
+		CameraPosition camera=new CameraPosition(sal,12.5f,0,0);
+		mapaOpts.camera(camera);
+		this.mapMngr=MapManager.newInstance(mapaOpts);
+		
+		FragmentManager gestorFragments=this.getSupportFragmentManager();
+		FragmentTransaction transicion=gestorFragments.beginTransaction();
+		transicion.add(R.id.contenedorFragmnt, this.mapMngr);
+		transicion.commit();
 	}
 
 	@Override
