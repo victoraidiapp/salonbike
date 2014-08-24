@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:salonbike="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/btnShowBikeLanesLayer"
+        android:orderInCategory="100"
+        salonbike:showAsAction="ifRoom"
+        android:title="@string/menu_options_lines"
+        android:icon="@drawable/menu_bike_lines"/>
+
+    <item
+        android:id="@+id/btnShowBikeStationLayer"
+        android:orderInCategory="100"
+        salonbike:showAsAction="ifRoom"
+        android:title="@string/menu_options_station"
+        android:icon="@drawable/menu_bike_stations"/>
+</menu>
