@@ -23,36 +23,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MainUI extends ActionBarActivity {
-	private DrawerLayout mDrawerLayout;
-	private ActionBarDrawerToggle mDrawerToggle;
+	
 	private MapManager mapMngr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ui);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-               //getSupportActionBar().setTitle("Cerrado");
-               supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                //getSupportActionBar().setTitle("Abierto");
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       
 		
 		/*DECLARAMOS EL MAP FRAGMENT*/
 		GoogleMapOptions mapaOpts=new GoogleMapOptions();
@@ -81,9 +60,7 @@ public class MainUI extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+		
 		if (id == R.id.btnShowBikeLanesLayer) {
 			//MOSTRAMOS LA CAPA DE CARRILES BICI
 			this.mapMngr.showLaneLayer();

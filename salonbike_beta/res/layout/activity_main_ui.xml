@@ -1,8 +1,9 @@
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/contenedorMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     
     <FrameLayout
         android:id="@+id/contenedorFragmnt"
@@ -11,64 +12,5 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/menu"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:background="#FFF"
-        android:orientation="vertical"
-        android:layout_gravity="start" >
-
-       <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#D8D8D8"
-        android:contentDescription="@string/bikes_station"
-        android:freezesText="false"
-        android:paddingBottom="10dp"
-        android:paddingLeft="18dp"
-        android:paddingTop="10dp"
-        android:text="@string/actions"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/goToBikesLane"
-        android:layout_height="wrap_content"
-        android:text="@string/bikes_lane"
-        style="@style/menu_page_item" />
-
-    <TextView
-        android:id="@+id/goToBikeStations"
-        
-        android:layout_height="wrap_content"
-        android:text="@string/bikes_station"
-        style="@style/menu_page_item" />
-
-    <TextView
-        android:id="@+id/title_bikes_station"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#D8D8D8"
-        android:contentDescription="@string/bikes_station"
-        android:freezesText="false"
-        android:paddingBottom="10dp"
-        android:paddingLeft="18dp"
-        android:paddingTop="10dp"
-        android:text="@string/settings"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <ListView
-        android:id="@+id/ListView01"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
-
-
-    </LinearLayout>
-
-    </android.support.v4.widget.DrawerLayout>
+    
+</LinearLayout>
