@@ -6,31 +6,47 @@ package com.aidiapp.salonbike.ui;
 
 
 import com.aidiapp.salonbike.R;
+import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+
 import android.app.Activity;
 
+
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
+
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
 
 public class MainUI extends ActionBarActivity {
 	
 	private MapManager mapMngr;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ui);
 		
-
+		/*CAMBIAMOS LA TIPOGRAFÍA DEL TÍTULO DE LA ACTION BAR*/
+		SpannableString s = new SpannableString("SalOnBike");
+	    s.setSpan(new TypefaceSpan(this, "vitor.otf"), 0, s.length(),
+	            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	 
+	    // Update the action bar title with the TypefaceSpan instance
+	    ActionBar actionBar = this.getSupportActionBar();
+	    actionBar.setTitle(s);
        
 		
 		/*DECLARAMOS EL MAP FRAGMENT*/
