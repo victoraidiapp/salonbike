@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 
 
 import android.os.Bundle;
@@ -24,15 +25,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainUI extends ActionBarActivity {
-	
+	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
+	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
 	private MapManager mapMngr;
-	
+	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +63,32 @@ public class MainUI extends ActionBarActivity {
 		FragmentTransaction transicion=gestorFragments.beginTransaction();
 		transicion.add(R.id.contenedorFragmnt, this.mapMngr);
 		transicion.commit();
+		Log.d("MAINUI","Comprobamos el estado");
+		if(savedInstanceState!=null){
+			this.flagBikeLaneLayer=savedInstanceState.getBoolean(BIKELANELAYER_STATE);
+			this.flagBikeStationLayer=savedInstanceState.getBoolean(BIKESTATIONLAYER_STATE);
+			
+		}
 	}
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+	// TODO Auto-generated method stub
+	outState.putBoolean(MainUI.BIKELANELAYER_STATE, this.flagBikeLaneLayer);
+	outState.putBoolean(MainUI.BIKESTATIONLAYER_STATE, this.flagBikeStationLayer);
+	super.onSaveInstanceState(outState);
+}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		Log.d("MAINUI","Generamos el menu");
+		this.flagBikeLaneLayer=!this.flagBikeLaneLayer;
+		this.flagBikeStationLayer=!this.flagBikeStationLayer;
 		getMenuInflater().inflate(R.menu.mapmanagermenu, menu);
-		
+		MenuItem item=menu.findItem(R.id.btnShowBikeLanesLayer);
+		this.checkBikeLaneLayer(item);
+		item=menu.findItem(R.id.btnShowBikeStationLayer);
+		this.checkBikeStationLayer(item);
 		return true;
 	}
 
@@ -79,15 +101,47 @@ public class MainUI extends ActionBarActivity {
 		
 		if (id == R.id.btnShowBikeLanesLayer) {
 			//MOSTRAMOS LA CAPA DE CARRILES BICI
-			this.mapMngr.showLaneLayer();
+			checkBikeLaneLayer(item);
+			
 			return true;
 		}
 		
 		if (id == R.id.btnShowBikeStationLayer) {
 			//MOSTRAMOS LA CAPA DE INTERCAMBIADORES
-			this.mapMngr.showBikeStationsLayer();
+			checkBikeStationLayer(item);
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	private void checkBikeLaneLayer(MenuItem item) {
+		if(this.flagBikeLaneLayer){
+			item.setTitle(this.getResources().getText(R.string.show_bikes_lanes));
+			item.setChecked(false);
+				this.mapMngr.hideBikeLanesLayer();
+				this.flagBikeLaneLayer=false;
+		}else{
+			item.setTitle(this.getResources().getText(R.string.hide_bikes_lanes));
+			
+			item.setChecked(true);
+			this.mapMngr.showLaneLayer();
+			this.flagBikeLaneLayer=true;
+		}
+	}
+
+	private void checkBikeStationLayer(MenuItem item) {
+		if(this.flagBikeStationLayer){
+			item.setTitle(this.getResources().getText(R.string.show_bikes_stations));
+		item.setChecked(false);
+			this.mapMngr.hideBikeStationsLayer();
+			this.flagBikeStationLayer=false;
+		}else{
+			item.setTitle(this.getResources().getText(R.string.hide_bikes_stations));
+				
+			item.setChecked(true);
+			this.mapMngr.showBikeStationsLayer();
+			this.flagBikeStationLayer=true;
+		}
+	}
+	
 }

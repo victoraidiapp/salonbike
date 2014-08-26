@@ -10,7 +10,9 @@
         <menu>
             <item android:id="@+id/btnShowBikeLanesLayer"
             android:title="@string/show_bikes_lanes"
-            android:icon="@drawable/menu"></item>    
+            android:icon="@drawable/menu"
+            android:checkable="true"></item>    
+            
             <item android:id="@+id/btnShowBikeLanesNearest"
             android:title="@string/bikelane_route_nearest"
             android:icon="@drawable/route_nearest_station2"></item>
@@ -29,7 +31,8 @@
         <menu>
             <item android:id="@+id/btnShowBikeStationLayer"
             android:title="@string/show_bikes_stations"
-            android:icon="@drawable/menu_bike_stations"></item>    
+            android:icon="@drawable/menu_bike_stations"
+            android:checkable="true"></item>    
             <item android:id="@+id/btnShowBikeStationNearest"
             android:title="@string/bikestation_route_nearest"
             android:icon="@drawable/menu_bike_lines"></item>

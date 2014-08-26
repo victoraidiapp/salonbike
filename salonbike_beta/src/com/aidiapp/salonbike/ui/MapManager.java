@@ -26,4 +26,12 @@ public class MapManager extends SupportMapFragment {
 		// Muestra la capa de intercambiadores
 		
 	}
+	public void hideBikeStationsLayer() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void hideBikeLanesLayer() {
+		// TODO Auto-generated method stub
+		
+	}
 }
