@@ -11,20 +11,24 @@
             backward-compatibility can go here.
         -->
         <item name="android:actionBarStyle">@style/salonbikebarra</item>
-
+<item name="android:background">@drawable/menubar</item>
+<item name="android:textColor">#000000</item>
         
     </style>
 
    
     <style name="salonbikebarra" parent="@style/Widget.AppCompat.Light.ActionBar">
 	    <item name="android:background">@drawable/menubar</item>
-	    
+	    <item name="android:dropDownListViewStyle">@style/salonbikeactionbar.listview</item>
 	    
 	    
 	    <item name="android:icon">@drawable/menu_icon</item>
 	</style>
 	<style name="salonbiketitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
 	    <item name="android:textColor">#000000</item>
+	</style>
+	<style name="salonbikeactionbar.listview" parent="@style/Widget.AppCompat.ListView.DropDown">
+	    <item name="android:background">@drawable/menubar</item>
 	</style>
 
 </resources>

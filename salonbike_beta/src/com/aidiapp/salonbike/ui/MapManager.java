@@ -18,4 +18,12 @@ public class MapManager extends SupportMapFragment {
 	    fragment.setArguments(arguments);
 	    return fragment;
 	}
+	public void showLaneLayer() {
+		// Muestra la capa de carriles bici
+		
+	}
+	public void showBikeStationsLayer() {
+		// Muestra la capa de intercambiadores
+		
+	}
 }

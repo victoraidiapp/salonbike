@@ -71,6 +71,7 @@ public class MainUI extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.mapmanagermenu, menu);
+		
 		return true;
 	}
 
@@ -85,11 +86,13 @@ public class MainUI extends ActionBarActivity {
         }
 		if (id == R.id.btnShowBikeLanesLayer) {
 			//MOSTRAMOS LA CAPA DE CARRILES BICI
+			this.mapMngr.showLaneLayer();
 			return true;
 		}
 		
 		if (id == R.id.btnShowBikeStationLayer) {
 			//MOSTRAMOS LA CAPA DE INTERCAMBIADORES
+			this.mapMngr.showBikeStationsLayer();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
