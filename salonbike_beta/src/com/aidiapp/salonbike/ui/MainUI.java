@@ -29,19 +29,24 @@ import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 
 public class MainUI extends ActionBarActivity {
 	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
 	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
 	private MapManager mapMngr;
+	private LinearLayout llLoadingIndicator;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ui);
-		
+		/*REFERENCIAMOS EL loadingIndicator*/
+		this.llLoadingIndicator=(LinearLayout) this.findViewById(R.id.loadingIndicator);
 		/*CAMBIAMOS LA TIPOGRAFÍA DEL TÍTULO DE LA ACTION BAR*/
 		SpannableString s = new SpannableString("SalOnBike");
 	    s.setSpan(new TypefaceSpan(this, "vitor.otf"), 0, s.length(),
@@ -141,6 +146,13 @@ protected void onSaveInstanceState(Bundle outState) {
 			item.setChecked(true);
 			this.mapMngr.showBikeStationsLayer();
 			this.flagBikeStationLayer=true;
+		}
+	}
+	private void loading(Boolean estado){
+		if(estado){
+			this.llLoadingIndicator.setVisibility(View.VISIBLE);
+		}else{
+			this.llLoadingIndicator.setVisibility(View.GONE);
 		}
 	}
 	
