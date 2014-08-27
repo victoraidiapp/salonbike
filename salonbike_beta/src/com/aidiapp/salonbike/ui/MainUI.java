@@ -45,6 +45,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 	private LinearLayout llLoadingIndicator;
 	private FrameLayout flContenedorFragment;
 	private FragmentManager gestorFragment;
+	private String currentFragmentTag;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
@@ -84,18 +85,20 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		}
 	}
 	private void showMapManager() {
-		Fragment mapFragment=this.gestorFragment.findFragmentByTag("MapManager");
+		this.currentFragmentTag="MapManager";
+		Fragment mapFragment=this.gestorFragment.findFragmentByTag(this.currentFragmentTag);
 		if(mapFragment !=null && mapFragment.isVisible()){
 		}else{
 			this.onLoadingMap(true);
 		FragmentTransaction transicion=gestorFragment.beginTransaction();
-		transicion.replace(R.id.contenedorFragmnt, this.mapMngr,"MapManager");
+		transicion.replace(R.id.contenedorFragmnt, this.mapMngr,this.currentFragmentTag);
 		transicion.commit();
 		}
 	}
 	private void showLanesPage(){
+		this.currentFragmentTag="LanesPage";
 		FragmentTransaction transicion=gestorFragment.beginTransaction();
-		transicion.replace(R.id.contenedorFragmnt, this.lanesPage,"LanesPage");
+		transicion.replace(R.id.contenedorFragmnt, this.lanesPage,this.currentFragmentTag);
 		transicion.commit();
 	}
 @Override
@@ -109,14 +112,24 @@ protected void onSaveInstanceState(Bundle outState) {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		Log.d("MAINUI","Generamos el menu");
-		this.flagBikeLaneLayer=!this.flagBikeLaneLayer;
-		this.flagBikeStationLayer=!this.flagBikeStationLayer;
-		getMenuInflater().inflate(R.menu.mapmanagermenu, menu);
-		MenuItem item=menu.findItem(R.id.btnShowBikeLanesLayer);
-		this.checkBikeLaneLayer(item);
-		item=menu.findItem(R.id.btnShowBikeStationLayer);
-		this.checkBikeStationLayer(item);
+		
+		if(this.currentFragmentTag.equals("LanesPage")){
+			Log.d("MAINUI","Generamos el menu del lane page");
+			
+			getMenuInflater().inflate(R.menu.lanepagemenu, menu);
+			
+		}
+		if(this.currentFragmentTag.equals("MapManager")){
+			Log.d("MAINUI","Generamos el menu del mapmanager");
+			this.flagBikeLaneLayer=!this.flagBikeLaneLayer;
+			this.flagBikeStationLayer=!this.flagBikeStationLayer;
+			getMenuInflater().inflate(R.menu.mapmanagermenu, menu);
+			MenuItem item=menu.findItem(R.id.btnShowBikeLanesLayer);
+			this.checkBikeLaneLayer(item);
+			item=menu.findItem(R.id.btnShowBikeStationLayer);
+			this.checkBikeStationLayer(item);
+		}
+		
 		return true;
 	}
 
@@ -129,8 +142,11 @@ protected void onSaveInstanceState(Bundle outState) {
 		
 		if(id== R.id.btnShowBikeLanesList){
 			this.showLanesPage();
-		}else{
+			this.supportInvalidateOptionsMenu();
+		}
+		if(id== R.id.btnShowMapManager){
 			this.showMapManager();
+			this.supportInvalidateOptionsMenu();
 		}
 		if (id == R.id.btnShowBikeLanesLayer) {
 			//MOSTRAMOS LA CAPA DE CARRILES BICI
