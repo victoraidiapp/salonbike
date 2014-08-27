@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -42,6 +43,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 	private MapManager mapMngr;
 	private LanesPage lanesPage;
 	private LinearLayout llLoadingIndicator;
+	private FrameLayout flContenedorFragment;
 	private FragmentManager gestorFragment;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
@@ -51,6 +53,8 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		setContentView(R.layout.activity_main_ui);
 		/*REFERENCIAMOS EL loadingIndicator*/
 		this.llLoadingIndicator=(LinearLayout) this.findViewById(R.id.loadingIndicator);
+		/*REFERENCIAMOS EL CONTENEDOR DE FRAGMENTS*/
+		this.flContenedorFragment=(FrameLayout) this.findViewById(R.id.contenedorFragmnt);
 		/*CAMBIAMOS LA TIPOGRAFÍA DEL TÍTULO DE LA ACTION BAR*/
 		SpannableString s = new SpannableString("SalOnBike");
 	    s.setSpan(new TypefaceSpan(this, "vitor.otf"), 0, s.length(),
@@ -183,6 +187,17 @@ protected void onSaveInstanceState(Bundle outState) {
 	public void onLoadingContent(Boolean estado) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onLoadingMap(Boolean estado) {
+		// TODO Auto-generated method stub
+		if(estado){
+			this.llLoadingIndicator.setVisibility(View.VISIBLE);
+			
+		}else{
+			this.llLoadingIndicator.setVisibility(View.GONE);
+			
+		}
 	}
 	
 }

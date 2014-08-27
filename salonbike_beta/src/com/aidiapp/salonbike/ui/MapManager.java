@@ -1,16 +1,21 @@
 package com.aidiapp.salonbike.ui;
 
 
+import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class MapManager extends SupportMapFragment {
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
+		public void onLoadingMap(Boolean estado);
 	}
 	private ActivityListener activityListener;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
@@ -28,6 +33,15 @@ public class MapManager extends SupportMapFragment {
 		this.activityListener=activityListener;
 		
 	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View r=super.onCreateView(inflater, container, savedInstanceState);
+		this.activityListener.onLoadingMap(true);
+		this.getMap().setOnMapLoadedCallback(this);
+		return r;
+	}
 	public void showLaneLayer() {
 		// Muestra la capa de carriles bici
 		
@@ -43,5 +57,11 @@ public class MapManager extends SupportMapFragment {
 	public void hideBikeLanesLayer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onMapLoaded() {
+		// TODO Auto-generated method stub
+		this.activityListener.onLoadingMap(false);
 	}
 }
