@@ -71,7 +71,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		CameraPosition camera=new CameraPosition(sal,12.5f,0,0);
 		mapaOpts.camera(camera);
 		this.mapMngr=MapManager.newInstance(mapaOpts,this);
-		
+		this.mapMngr.setActivityListener(this);
 		/*DECLARAMOS EL LANESPAGE*/
 		this.lanesPage=new LanesPage();
 		showMapManager();
@@ -87,6 +87,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		Fragment mapFragment=this.gestorFragment.findFragmentByTag("MapManager");
 		if(mapFragment !=null && mapFragment.isVisible()){
 		}else{
+			this.onLoadingMap(true);
 		FragmentTransaction transicion=gestorFragment.beginTransaction();
 		transicion.replace(R.id.contenedorFragmnt, this.mapMngr,"MapManager");
 		transicion.commit();

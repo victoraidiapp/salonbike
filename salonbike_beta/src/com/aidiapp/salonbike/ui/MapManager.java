@@ -22,23 +22,18 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
 
-	    MapManager fragment = new MapManager(activityListener);
+	    MapManager fragment = new MapManager();
 	    
 	    fragment.setArguments(arguments);
 	    return fragment;
 	}
 	
-	public MapManager(ActivityListener activityListener) {
-		// TODO Auto-generated constructor stub
-		this.activityListener=activityListener;
-		
-	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View r=super.onCreateView(inflater, container, savedInstanceState);
-		this.activityListener.onLoadingMap(true);
 		this.getMap().setOnMapLoadedCallback(this);
 		return r;
 	}
@@ -62,6 +57,14 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	@Override
 	public void onMapLoaded() {
 		// TODO Auto-generated method stub
-		this.activityListener.onLoadingMap(false);
+		this.getActivityListener().onLoadingMap(false);
+	}
+
+	public ActivityListener getActivityListener() {
+		return activityListener;
+	}
+
+	public void setActivityListener(ActivityListener activityListener) {
+		this.activityListener = activityListener;
 	}
 }
