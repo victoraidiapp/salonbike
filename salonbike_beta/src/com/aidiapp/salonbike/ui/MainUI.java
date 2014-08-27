@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -38,7 +39,9 @@ public class MainUI extends ActionBarActivity {
 	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
 	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
 	private MapManager mapMngr;
+	private LanesPage lanesPage;
 	private LinearLayout llLoadingIndicator;
+	private FragmentManager gestorFragment;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
@@ -56,7 +59,7 @@ public class MainUI extends ActionBarActivity {
 	    ActionBar actionBar = this.getSupportActionBar();
 	    actionBar.setTitle(s);
        
-		
+		this.gestorFragment=this.getSupportFragmentManager();
 		/*DECLARAMOS EL MAP FRAGMENT*/
 		GoogleMapOptions mapaOpts=new GoogleMapOptions();
 		LatLng sal=new LatLng(40.9705347,-5.6637995);
@@ -64,16 +67,30 @@ public class MainUI extends ActionBarActivity {
 		mapaOpts.camera(camera);
 		this.mapMngr=MapManager.newInstance(mapaOpts);
 		
-		FragmentManager gestorFragments=this.getSupportFragmentManager();
-		FragmentTransaction transicion=gestorFragments.beginTransaction();
-		transicion.add(R.id.contenedorFragmnt, this.mapMngr);
-		transicion.commit();
+		/*DECLARAMOS EL LANESPAGE*/
+		this.lanesPage=new LanesPage();
+		showMapManager();
+		//showLanesPage();
 		Log.d("MAINUI","Comprobamos el estado");
 		if(savedInstanceState!=null){
 			this.flagBikeLaneLayer=savedInstanceState.getBoolean(BIKELANELAYER_STATE);
 			this.flagBikeStationLayer=savedInstanceState.getBoolean(BIKESTATIONLAYER_STATE);
 			
 		}
+	}
+	private void showMapManager() {
+		Fragment mapFragment=this.gestorFragment.findFragmentByTag("MapManager");
+		if(mapFragment !=null && mapFragment.isVisible()){
+		}else{
+		FragmentTransaction transicion=gestorFragment.beginTransaction();
+		transicion.replace(R.id.contenedorFragmnt, this.mapMngr,"MapManager");
+		transicion.commit();
+		}
+	}
+	private void showLanesPage(){
+		FragmentTransaction transicion=gestorFragment.beginTransaction();
+		transicion.replace(R.id.contenedorFragmnt, this.lanesPage,"LanesPage");
+		transicion.commit();
 	}
 @Override
 protected void onSaveInstanceState(Bundle outState) {
@@ -104,6 +121,11 @@ protected void onSaveInstanceState(Bundle outState) {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		
+		if(id== R.id.btnShowBikeLanesList){
+			this.showLanesPage();
+		}else{
+			this.showMapManager();
+		}
 		if (id == R.id.btnShowBikeLanesLayer) {
 			//MOSTRAMOS LA CAPA DE CARRILES BICI
 			checkBikeLaneLayer(item);
@@ -117,6 +139,7 @@ protected void onSaveInstanceState(Bundle outState) {
 			
 			return true;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 	private void checkBikeLaneLayer(MenuItem item) {
