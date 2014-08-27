@@ -6,6 +6,7 @@ package com.aidiapp.salonbike.ui;
 
 
 import com.aidiapp.salonbike.R;
+import com.aidiapp.salonbike.ui.MapManager.ActivityListener;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -35,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 
-public class MainUI extends ActionBarActivity {
+public class MainUI extends ActionBarActivity implements ActivityListener {
 	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
 	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
 	private MapManager mapMngr;
@@ -65,7 +66,7 @@ public class MainUI extends ActionBarActivity {
 		LatLng sal=new LatLng(40.9705347,-5.6637995);
 		CameraPosition camera=new CameraPosition(sal,12.5f,0,0);
 		mapaOpts.camera(camera);
-		this.mapMngr=MapManager.newInstance(mapaOpts);
+		this.mapMngr=MapManager.newInstance(mapaOpts,this);
 		
 		/*DECLARAMOS EL LANESPAGE*/
 		this.lanesPage=new LanesPage();
@@ -177,6 +178,11 @@ protected void onSaveInstanceState(Bundle outState) {
 		}else{
 			this.llLoadingIndicator.setVisibility(View.GONE);
 		}
+	}
+	@Override
+	public void onLoadingContent(Boolean estado) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
