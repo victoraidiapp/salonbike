@@ -1,23 +1,31 @@
 package com.aidiapp.salonbike.ui;
 
 
+import java.util.HashMap;
+
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MapManager extends SupportMapFragment implements OnMapLoadedCallback {
+import com.aidiapp.salonbike.core.BikeLane;
+import com.aidiapp.salonbike.core.DataManager;
+
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
 		public void onLoadingMap(Boolean estado);
 	}
 	private ActivityListener activityListener;
+	private HashMap<String,BikeLane>lanesZones;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
@@ -25,6 +33,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	    MapManager fragment = new MapManager();
 	    
 	    fragment.setArguments(arguments);
+	    
+	    DataManager.getLanes(fragment,((Activity)activityListener).getAssets());
 	    return fragment;
 	}
 	
@@ -66,5 +76,13 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 
 	public void setActivityListener(ActivityListener activityListener) {
 		this.activityListener = activityListener;
+	}
+
+
+	@Override
+	public void onLanesResult(HashMap<String, BikeLane> result) {
+		// TODO Auto-generated method stub
+		Log.d("MAPMANAGER","Hemos Obtenido el resultado");
+		this.lanesZones=result;
 	}
 }
