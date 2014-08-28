@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:salonbike="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/btnShowMapManager"
+        android:orderInCategory="100"
+        salonbike:showAsAction="ifRoom"
+        android:title="@string/back_to_map"
+            android:icon="@drawable/route_nearest_station"></item>
+
+</menu>
