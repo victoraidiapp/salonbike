@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.app.Activity;
@@ -83,7 +86,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			BikeLane bl=(BikeLane) e.getValue();
 			PolylineOptions opciones=new PolylineOptions();
 			opciones.color(bl.getColor());
-			opciones.width(6f);
+			opciones.width(10f);
 			PolyLineGroup plg=new PolyLineGroup(this.getMap(),opciones);
 			ArrayList carriles=bl.getCarriles();
 			Iterator itc=carriles.iterator();
@@ -123,6 +126,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public void onMapLoaded() {
 		// TODO Auto-generated method stub
 		this.getActivityListener().onLoadingMap(false);
+		
 	}
 
 	public ActivityListener getActivityListener() {
@@ -143,4 +147,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			this.showLaneLayer();
 		}
 	}
+
+
+	
 }

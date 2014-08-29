@@ -33,6 +33,7 @@ public void addPolyline(List<LatLng> puntos){
 	Polyline poli=this.gmap.addPolyline(this.opciones);
 	poli.setPoints(puntos);
 	poli.setVisible(false);
+	
 	this.lineas.add(poli);
 	
 }
