@@ -8,6 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 
+import android.graphics.Color;
 import android.util.Log;
 
 
@@ -19,6 +20,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	private Boolean in_placemarktag=false;
 	private Boolean in_linestringtag=false;
 	private Boolean in_coordinatestag=false;
+	private Boolean in_colortag=false;
 	private HashMap coleccion;
 	private StringBuilder buffer;
 	private Object currentElement;
@@ -49,6 +51,8 @@ public class KMLSaxHandler extends DefaultHandler {
 	      } else if (localName.equals("coordinates")) {
 	          buffer = new StringBuilder();
 	          this.in_coordinatestag = true;                        
+	      } else if(localName.equals("color")){
+	    	  this.in_colortag=true;
 	      }
 		super.startElement(uri, localName, qName, attributes);
 	}
@@ -82,7 +86,9 @@ public class KMLSaxHandler extends DefaultHandler {
 	           this.in_coordinatestag = false;
 	           
 	           
-	       }
+	       }else if(localName.equals("color")){
+		    	  this.in_colortag=false;
+		      }
 		super.endElement(uri, localName, qName);
 	}
 	
@@ -98,7 +104,10 @@ public class KMLSaxHandler extends DefaultHandler {
 		    } else if(this.in_descriptiontag){
 		    	if(this.currentElement instanceof BikeLane)
 		        	((BikeLane)currentElement).setDescription(new String(ch, start, length));
-		    } else
+		    } else if(this.in_colortag){
+		    	if(this.currentElement instanceof BikeLane)
+		        	((BikeLane)currentElement).setColor(Color.parseColor(new String(ch,start,length)));
+		    }else
 		    
 		    if(this.in_coordinatestag){  
 		    	

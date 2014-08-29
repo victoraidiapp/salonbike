@@ -2,6 +2,7 @@
 <kml xmlns='http://www.opengis.net/kml/2.2'>
 	<LanesZone>
 		<name>Zona-1: GARRIDO NORTE - CARMELITAS</name>
+		<color>#A61B4A</color>
 		<description><![CDATA[La Zona - A, une el Barrio de Garrido con el barrio de Carmelitas.]]></description>
 		<Folder>
 			<Placemark>
@@ -59,6 +60,7 @@
 	</LanesZone>
 	<LanesZone>
 		<name>Zona-2: PASEO DE LA ESTACIÓN - ALDEHUELA</name>
+		<color>#009D57</color>
 		<description><![CDATA[La Zona - 2, permite recorrer el trayecto desde la calle del tunel de la televisión, hasta el Aldehuela.]]></description>
 		<Folder>
 			<Placemark>
@@ -115,6 +117,7 @@
 	</LanesZone>
 	<LanesZone>
 		<name>Zona-3: ALDEHUELA - CHAMBERI</name>
+		<color>#F4B400</color>
 		<description><![CDATA[Éste tramo de carril bici une el Aldehuela con el barrio de Chamberi.]]></description>
 		<Folder>
 			<Placemark>
@@ -141,6 +144,7 @@
 	</LanesZone>
 	<LanesZone>
 		<name>Zona-4: ALDEHUELA - SANTA MARTA</name>
+		<color>#3F5BA9</color>
 		<description><![CDATA[La Zona - 4, une el Aldehuela con Santa Marta de Tormes.]]></description>
 		<Folder>
 			<Placemark>
@@ -167,6 +171,7 @@
 	</LanesZone>
 	<LanesZone>
 		<name>Zona-5: CHAMBERI - PIZARRALES - VILLAMAYOR</name>
+		<color>#000000</color>
 		<description><![CDATA[La Zona - 5, comunica los barrios de Chamberi, Los Pizarrales con el pueblo de Villamayor llegando incluso al Helmántico.]]></description>
 		<Folder>
 			<Placemark>
@@ -263,6 +268,7 @@
 	</LanesZone>
 	<LanesZone>
 		<name>Zona-6: CTRA. MADRID - EL ZURGUEN</name>
+		<color>#7C3592</color>
 		<description><![CDATA[La Zona - 6 conecta la parte baja del paso fluvial con el barrio del Zurguén y Aldeatejada.]]></description>
 		<Folder>
 			<Placemark>
