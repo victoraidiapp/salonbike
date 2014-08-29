@@ -29,7 +29,7 @@ public class BikeLane {
 		ArrayList<LatLng> carril=new ArrayList();
 		for(int i=0;i<pts.length;i++){
 			
-			Log.d("BIKELANE","Queremos recoger las coordenadas "+pts[i]);
+			//Log.d("BIKELANE","Queremos recoger las coordenadas "+pts[i]);
 			String co[]=pts[i].split(",");
 			
 			carril.add(new LatLng(Float.valueOf(co[1]),Float.valueOf(co[0])));

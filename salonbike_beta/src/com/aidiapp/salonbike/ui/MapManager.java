@@ -33,6 +33,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	private ActivityListener activityListener;
 	private HashMap<String,BikeLane>lanesZones;
 	private HashMap<String,PolyLineGroup>lanesZonesMaplines;
+	private Boolean flagLanesLayer=false;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
@@ -57,19 +58,24 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	}
 	public void showLaneLayer() {
 		// Muestra la capa de carriles bici
+		this.flagLanesLayer=true;
 		if(this.lanesZonesMaplines==null){
 			this.loadLanesLines();
-		}
+		}else{
+		if(!this.lanesZonesMaplines.isEmpty()){
 		Set coleccion=this.lanesZonesMaplines.entrySet();
 		Iterator it=coleccion.iterator();
 		while (it.hasNext()){
 			Entry e=(Entry) it.next();
 			((PolyLineGroup)e.getValue()).setVisible(true);
 		}
+		}
+		}
 	}
 		
 	private void loadLanesLines() {
 		// TODO Auto-generated method stub
+		if(this.lanesZones!=null){
 		this.lanesZonesMaplines=new HashMap();
 		Iterator it=this.lanesZones.entrySet().iterator();
 		while(it.hasNext()){
@@ -77,7 +83,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			BikeLane bl=(BikeLane) e.getValue();
 			PolylineOptions opciones=new PolylineOptions();
 			opciones.color(bl.getColor());
-			opciones.width(3f);
+			opciones.width(6f);
 			PolyLineGroup plg=new PolyLineGroup(this.getMap(),opciones);
 			ArrayList carriles=bl.getCarriles();
 			Iterator itc=carriles.iterator();
@@ -86,6 +92,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 				plg.addPolyline(puntos);
 			}
 			this.lanesZonesMaplines.put(bl.getName(), plg);
+		}
+		if(this.flagLanesLayer) this.showLaneLayer();
 		}
 	}
 
@@ -108,6 +116,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			((PolyLineGroup)e.getValue()).setVisible(false);
 		}
 		}
+		this.flagLanesLayer=false;
 	}
 
 	@Override
@@ -130,11 +139,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Hemos Obtenido el resultado");
 		this.lanesZones=result;
-		Set<Entry<String, BikeLane>> coleccion=this.lanesZones.entrySet();
-		Iterator it=coleccion.iterator();
-		while (it.hasNext()){
-			Entry<String,BikeLane> et=(Entry<String, BikeLane>) it.next();
-			Log.d("MAPMANAGER","Aquí tenemos la zona "+et.getKey());
+		if(this.flagLanesLayer){
+			this.showLaneLayer();
 		}
 	}
 }

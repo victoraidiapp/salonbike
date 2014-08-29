@@ -34,7 +34,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		// TODO Auto-generated method stub
-		 Log.d("SAXHANDLER", "Queremos abrir la etiqueta "+localName);
+		// Log.d("SAXHANDLER", "Queremos abrir la etiqueta "+localName);
 	      if (localName.equals("LanesZone")) { 
 	           this.in_laneszonetag = true;
 	           this.currentElement=new BikeLane();
@@ -61,7 +61,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		// TODO Auto-generated method stub
-		 Log.d("SAXHANDLER", "Queremos cerrar la etiqueta "+localName);
+		 //Log.d("SAXHANDLER", "Queremos cerrar la etiqueta "+localName);
 	       if (localName.equals("LanesZone")) {
 	           this.in_laneszonetag = false; 
 	           if(this.currentElement instanceof BikeLane)
