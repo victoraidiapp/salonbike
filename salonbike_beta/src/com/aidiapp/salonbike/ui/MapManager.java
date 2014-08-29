@@ -17,13 +17,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
 import com.aidiapp.salonbike.core.DataManager;
 
@@ -37,6 +46,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	private HashMap<String,BikeLane>lanesZones;
 	private HashMap<String,PolyLineGroup>lanesZonesMaplines;
 	private Boolean flagLanesLayer=false;
+	private LinearLayout lanesInfoBox;
+	private ViewGroup container;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
@@ -56,6 +67,15 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View r=super.onCreateView(inflater, container, savedInstanceState);
+		this.container=container;
+		this.lanesInfoBox=new LinearLayout(this.getActivity());
+		this.lanesInfoBox.setOrientation(LinearLayout.HORIZONTAL);
+		this.lanesInfoBox.setPadding(10, 10, 10, 0);
+		/*TextView tv=new TextView(this.getActivity());
+		tv.setText("Hola");
+		this.lanesInfoBox.addView(tv, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));*/
+		
+		//this.lanesInfoBox.setVisibility(View.INVISIBLE);
 		this.getMap().setOnMapLoadedCallback(this);
 		return r;
 	}
@@ -66,6 +86,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			this.loadLanesLines();
 		}else{
 		if(!this.lanesZonesMaplines.isEmpty()){
+			this.lanesInfoBox.setVisibility(View.VISIBLE);
 		Set coleccion=this.lanesZonesMaplines.entrySet();
 		Iterator it=coleccion.iterator();
 		while (it.hasNext()){
@@ -78,14 +99,34 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		
 	private void loadLanesLines() {
 		// TODO Auto-generated method stub
+		
 		if(this.lanesZones!=null){
+			
+			
 		this.lanesZonesMaplines=new HashMap();
 		Iterator it=this.lanesZones.entrySet().iterator();
+		int i=1;
 		while(it.hasNext()){
+			TextView tv=new TextView(this.getActivity());
+			tv.setText(String.valueOf(i));
+			tv.setGravity(Gravity.CENTER);
 			Entry e=(Entry) it.next();
 			BikeLane bl=(BikeLane) e.getValue();
+			tv.setBackgroundResource(R.drawable.rounded_box);
+			tv.setTextColor(Color.WHITE);
+			GradientDrawable dr=(GradientDrawable) tv.getBackground();
+			dr.setColor(bl.getColor());
+			//tv.setBackgroundColor(bl.getColor());
+			
+			//tv.setBackgroundDrawable(this.getActivity().getResources().getDrawable(R.drawable.rounded_box));
+			tv.setPadding(5, 15, 5, 15);
+			LinearLayout.LayoutParams llParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f);
+			llParams.setMargins(5, 5, 5, 5);
+			this.lanesInfoBox.addView(tv,llParams );
+			
 			PolylineOptions opciones=new PolylineOptions();
 			opciones.color(bl.getColor());
+			
 			opciones.width(10f);
 			PolyLineGroup plg=new PolyLineGroup(this.getMap(),opciones);
 			ArrayList carriles=bl.getCarriles();
@@ -95,6 +136,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 				plg.addPolyline(puntos);
 			}
 			this.lanesZonesMaplines.put(bl.getName(), plg);
+			i++;
 		}
 		if(this.flagLanesLayer) this.showLaneLayer();
 		}
@@ -112,6 +154,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public void hideBikeLanesLayer() {
 		// TODO Auto-generated method stub
 		if(this.lanesZonesMaplines!=null){
+			this.lanesInfoBox.setVisibility(View.INVISIBLE);
 		Set coleccion=this.lanesZonesMaplines.entrySet();
 		Iterator it=coleccion.iterator();
 		while (it.hasNext()){
@@ -126,6 +169,10 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public void onMapLoaded() {
 		// TODO Auto-generated method stub
 		this.getActivityListener().onLoadingMap(false);
+		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+		
+		
+		this.container.addView(lanesInfoBox,llp );
 		
 	}
 
