@@ -60,6 +60,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	private Boolean flagLanesLayer=false;
 	
 	private ViewGroup container;
+	private LaneInfoDialog laneInfoDialog;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
@@ -80,7 +81,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		// TODO Auto-generated method stub
 		View r=super.onCreateView(inflater, container, savedInstanceState);
 		this.container=container;
-		
+		this.laneInfoDialog=new LaneInfoDialog();
 		this.getMap().setOnMapLoadedCallback(this);
 		return r;
 	}
@@ -165,7 +166,11 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		}
 		this.flagLanesLayer=false;
 	}
-
+public void showBikeLaneInfoDialog(String lane){
+	
+	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
+	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
+}
 	@Override
 	public void onMapLoaded() {
 		// TODO Auto-generated method stub
@@ -206,7 +211,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Has picado en el marcador "+marker.getTitle());
-		
+		this.showBikeLaneInfoDialog(marker.getTitle());
 		return true;
 	}
 
