@@ -10,24 +10,34 @@ import java.util.Set;
 
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,8 +45,10 @@ import android.widget.TextView;
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
 import com.aidiapp.salonbike.core.DataManager;
+import com.aidiapp.salonbike.ui.utils.ImageUtils;
+import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
-public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener {
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
@@ -46,7 +58,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	private HashMap<String,BikeLane>lanesZones;
 	private HashMap<String,PolyLineGroup>lanesZonesMaplines;
 	private Boolean flagLanesLayer=false;
-	private LinearLayout lanesInfoBox;
+	
 	private ViewGroup container;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
@@ -68,14 +80,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		// TODO Auto-generated method stub
 		View r=super.onCreateView(inflater, container, savedInstanceState);
 		this.container=container;
-		this.lanesInfoBox=new LinearLayout(this.getActivity());
-		this.lanesInfoBox.setOrientation(LinearLayout.HORIZONTAL);
-		this.lanesInfoBox.setPadding(10, 10, 10, 0);
-		/*TextView tv=new TextView(this.getActivity());
-		tv.setText("Hola");
-		this.lanesInfoBox.addView(tv, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));*/
 		
-		//this.lanesInfoBox.setVisibility(View.INVISIBLE);
 		this.getMap().setOnMapLoadedCallback(this);
 		return r;
 	}
@@ -83,10 +88,13 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		// Muestra la capa de carriles bici
 		this.flagLanesLayer=true;
 		if(this.lanesZonesMaplines==null){
+			Log.d("MAPMANAGER", "TEnemos que cargar las lineas");
 			this.loadLanesLines();
 		}else{
+			
 		if(!this.lanesZonesMaplines.isEmpty()){
-			this.lanesInfoBox.setVisibility(View.VISIBLE);
+			//this.lanesInfoBox.setVisibility(View.VISIBLE);
+			Log.d("MAPMANAGER", "Hay lineas");
 		Set coleccion=this.lanesZonesMaplines.entrySet();
 		Iterator it=coleccion.iterator();
 		while (it.hasNext()){
@@ -106,23 +114,14 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		this.lanesZonesMaplines=new HashMap();
 		Iterator it=this.lanesZones.entrySet().iterator();
 		int i=1;
+		
+		
 		while(it.hasNext()){
-			TextView tv=new TextView(this.getActivity());
-			tv.setText(String.valueOf(i));
-			tv.setGravity(Gravity.CENTER);
+			
 			Entry e=(Entry) it.next();
 			BikeLane bl=(BikeLane) e.getValue();
-			tv.setBackgroundResource(R.drawable.rounded_box);
-			tv.setTextColor(Color.WHITE);
-			GradientDrawable dr=(GradientDrawable) tv.getBackground();
-			dr.setColor(bl.getColor());
-			//tv.setBackgroundColor(bl.getColor());
 			
-			//tv.setBackgroundDrawable(this.getActivity().getResources().getDrawable(R.drawable.rounded_box));
-			tv.setPadding(5, 15, 5, 15);
-			LinearLayout.LayoutParams llParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f);
-			llParams.setMargins(5, 5, 5, 5);
-			this.lanesInfoBox.addView(tv,llParams );
+			Log.d("MAPMANAGER","Vamos a cargar la linea del carril "+bl.getName());
 			
 			PolylineOptions opciones=new PolylineOptions();
 			opciones.color(bl.getColor());
@@ -133,7 +132,9 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			Iterator itc=carriles.iterator();
 			while (itc.hasNext()){
 				List puntos=(List) itc.next();
-				plg.addPolyline(puntos);
+				
+			
+				plg.addPolyline(puntos,bl.getName(),this.getActivity());
 			}
 			this.lanesZonesMaplines.put(bl.getName(), plg);
 			i++;
@@ -154,7 +155,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public void hideBikeLanesLayer() {
 		// TODO Auto-generated method stub
 		if(this.lanesZonesMaplines!=null){
-			this.lanesInfoBox.setVisibility(View.INVISIBLE);
+			//this.lanesInfoBox.setVisibility(View.INVISIBLE);
 		Set coleccion=this.lanesZonesMaplines.entrySet();
 		Iterator it=coleccion.iterator();
 		while (it.hasNext()){
@@ -171,8 +172,13 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		this.getActivityListener().onLoadingMap(false);
 		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 		
+		this.getMap().setOnMarkerClickListener(this);
+		if(this.flagLanesLayer){
+			Log.d("MAPMANAGER","Tenemos que mostrar la capa de carriles");
+			this.showLaneLayer();
+			
+		}
 		
-		this.container.addView(lanesInfoBox,llp );
 		
 	}
 
@@ -196,5 +202,22 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	}
 
 
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		// TODO Auto-generated method stub
+		Log.d("MAPMANAGER","Has picado en el marcador "+marker.getTitle());
+		
+		return true;
+	}
+
+@Override
+public void onAttach(Activity activity) {
+	// TODO Auto-generated method stub
+	Log.d("MAPMANAGER","Me vuelven a adjuntar a la activity");
+	
+	this.lanesZonesMaplines=null;
+	
+	super.onAttach(activity);
+}
 	
 }
