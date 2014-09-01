@@ -2,7 +2,10 @@ package com.aidiapp.salonbike.core;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.xml.sax.InputSource;
 
@@ -32,5 +35,19 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		
+	}
+	public static ArrayList<HashMap<String,String>> lanesHashMaptoLanesList(HashMap<String,BikeLane> col){
+		ArrayList<HashMap<String,String>> r=new ArrayList();
+		Iterator it=col.entrySet().iterator();
+		
+		while(it.hasNext()){
+			Entry e=(Entry) it.next();
+			BikeLane bl=(BikeLane) e.getValue();
+			HashMap<String,String> valores=new HashMap();
+			valores.put("Nombre", bl.getName());
+			valores.put("Color", String.valueOf(bl.getColor()));
+			r.add(valores);
+		}
+		return r;
 	}
 }

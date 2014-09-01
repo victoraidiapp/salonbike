@@ -5,7 +5,12 @@ package com.aidiapp.salonbike.ui;
 
 
 
+import java.util.HashMap;
+
 import com.aidiapp.salonbike.R;
+import com.aidiapp.salonbike.core.BikeLane;
+import com.aidiapp.salonbike.core.DataManager;
+import com.aidiapp.salonbike.ui.LanesPage.Listener;
 import com.aidiapp.salonbike.ui.MapManager.ActivityListener;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -37,7 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 
-public class MainUI extends ActionBarActivity implements ActivityListener {
+public class MainUI extends ActionBarActivity implements ActivityListener, Listener {
 	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
 	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
 	private MapManager mapMngr;
@@ -46,6 +51,8 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 	private FrameLayout flContenedorFragment;
 	private FragmentManager gestorFragment;
 	private String currentFragmentTag;
+	private Menu m;
+	private String selectLane=null;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
@@ -74,7 +81,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		this.mapMngr=MapManager.newInstance(mapaOpts,this);
 		this.mapMngr.setActivityListener(this);
 		/*DECLARAMOS EL LANESPAGE*/
-		this.lanesPage=new LanesPage();
+		this.lanesPage=new LanesPage(this);
 		showMapManager();
 		//showLanesPage();
 		Log.d("MAINUI","Comprobamos el estado");
@@ -93,6 +100,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener {
 		FragmentTransaction transicion=gestorFragment.beginTransaction();
 		transicion.replace(R.id.contenedorFragmnt, this.mapMngr,this.currentFragmentTag);
 		transicion.commit();
+		
 		}
 	}
 	private void showLanesPage(){
@@ -128,6 +136,7 @@ protected void onSaveInstanceState(Bundle outState) {
 			this.checkBikeLaneLayer(item);
 			item=menu.findItem(R.id.btnShowBikeStationLayer);
 			this.checkBikeStationLayer(item);
+			this.m=menu;
 		}
 		
 		return true;
@@ -213,8 +222,37 @@ protected void onSaveInstanceState(Bundle outState) {
 			
 		}else{
 			this.llLoadingIndicator.setVisibility(View.GONE);
+			if(this.selectLane!=null){
+				if(!this.flagBikeLaneLayer)this.flagBikeLaneLayer=true;
+				this.supportInvalidateOptionsMenu();
+				this.mapMngr.showBikeLaneInfoDialog(this.selectLane);
+				
+				this.selectLane=null;
+			}
 			
 		}
 	}
+	@Override
+	public void onLoadLanesResult(HashMap<String, BikeLane> col) {
+		// TODO Auto-generated method stub
+		this.lanesPage.setLanes(DataManager.lanesHashMaptoLanesList(col));
+	}
+	@Override
+	public void onSelectLane(String l) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
+		this.selectLane=l;
+		this.showMapManager();
+		this.supportInvalidateOptionsMenu();
+		
+		
+		
+		
+	}
+	
 	
 }

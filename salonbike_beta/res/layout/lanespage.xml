@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    
     android:orientation="vertical" >
 
     
 
     <TextView
         android:id="@+id/title_bikes_station"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#D8D8D8"
+        android:background="#38a0f9"
         android:contentDescription="@string/bikes_lane"
         android:paddingBottom="10dp"
         android:paddingLeft="18dp"
@@ -23,7 +23,7 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/listView_BikesStation"
+        android:id="@+id/listView_BikesLanes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

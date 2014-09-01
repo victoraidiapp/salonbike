@@ -53,6 +53,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
 		public void onLoadingMap(Boolean estado);
+		public void onLoadLanesResult(HashMap<String,BikeLane> col);
 	}
 	private ActivityListener activityListener;
 	private HashMap<String,BikeLane>lanesZones;
@@ -131,11 +132,14 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			PolyLineGroup plg=new PolyLineGroup(this.getMap(),opciones);
 			ArrayList carriles=bl.getCarriles();
 			Iterator itc=carriles.iterator();
+			if(this.getActivity()==null){
+				Log.d("MAPMANAGER","No hay contexto ");
+			}
 			while (itc.hasNext()){
 				List puntos=(List) itc.next();
 				
 			
-				plg.addPolyline(puntos,bl.getName(),this.getActivity());
+				plg.addPolyline(puntos,bl.getName(),(Activity)this.getActivityListener());
 			}
 			this.lanesZonesMaplines.put(bl.getName(), plg);
 			i++;
@@ -201,6 +205,7 @@ public void showBikeLaneInfoDialog(String lane){
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Hemos Obtenido el resultado");
 		this.lanesZones=result;
+		this.activityListener.onLoadLanesResult(result);
 		if(this.flagLanesLayer){
 			this.showLaneLayer();
 		}
@@ -224,5 +229,8 @@ public void onAttach(Activity activity) {
 	
 	super.onAttach(activity);
 }
+
+
+
 	
 }
