@@ -24,12 +24,25 @@ public class KMLSaxHandler extends DefaultHandler {
 	private HashMap coleccion;
 	private StringBuilder buffer;
 	private Object currentElement;
+	private int count;
 	
-	public KMLSaxHandler(HashMap<String,BikeLane> carriles) {
+	public KMLSaxHandler(HashMap<Integer,BikeLane> carriles) {
 		// TODO Auto-generated constructor stub
 		this.coleccion=carriles;
 	}
+	@Override
+	public void startDocument() throws SAXException {
+		// TODO Auto-generated method stub
+		this.count=1;
+		super.startDocument();
+	}
 	
+	@Override
+	public void endDocument() throws SAXException {
+		// TODO Auto-generated method stub
+		this.count=0;
+		super.endDocument();
+	}
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
@@ -65,8 +78,10 @@ public class KMLSaxHandler extends DefaultHandler {
 	       if (localName.equals("LanesZone")) {
 	           this.in_laneszonetag = false; 
 	           if(this.currentElement instanceof BikeLane)
-	        	   this.coleccion.put(((BikeLane)this.currentElement).getName(), this.currentElement);
+	        	   Log.d("SAXHANDLER","añadimos el carril "+((BikeLane)this.currentElement).getIdLane()+" que es el de "+((BikeLane)this.currentElement).getName());
+	        	   this.coleccion.put(((BikeLane)this.currentElement).getIdLane(), this.currentElement);
 	           this.currentElement=null;
+	           this.count++;
 	       } else if (localName.equals("Placemark")) { 
 	           this.in_placemarktag = false;
 
@@ -97,8 +112,10 @@ public class KMLSaxHandler extends DefaultHandler {
 			throws SAXException {
 		
 		 if(this.in_nametag){ 
-		        if(this.currentElement instanceof BikeLane)
+		        if(this.currentElement instanceof BikeLane && !this.in_placemarktag)
 		        	((BikeLane)currentElement).setName(new String(ch, start, length));
+		        Log.d("SAXHANDLER","Estamos creando el lane "+this.count+" con el nombre "+((BikeLane)currentElement).getName());
+		        ((BikeLane)currentElement).setIdLane(this.count);
 		        
 		                  
 		    } else if(this.in_descriptiontag){

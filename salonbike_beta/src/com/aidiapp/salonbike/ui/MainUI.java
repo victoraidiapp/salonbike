@@ -52,7 +52,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener, Liste
 	private FragmentManager gestorFragment;
 	private String currentFragmentTag;
 	private Menu m;
-	private String selectLane=null;
+	private Integer selectLane=null;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
 	
 	@Override
@@ -233,12 +233,12 @@ protected void onSaveInstanceState(Bundle outState) {
 		}
 	}
 	@Override
-	public void onLoadLanesResult(HashMap<String, BikeLane> col) {
+	public void onLoadLanesResult(HashMap<Integer, BikeLane> col) {
 		// TODO Auto-generated method stub
 		this.lanesPage.setLanes(DataManager.lanesHashMaptoLanesList(col));
 	}
 	@Override
-	public void onSelectLane(String l) {
+	public void onSelectLane(Integer l) {
 		// TODO Auto-generated method stub
 		
 		

@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/laneitem_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
     <TextView
         android:id="@+id/laneitem_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginLeft="30dp"
-        android:paddingTop="10dp"
+        android:background="#FFFFFF"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
-        android:textSize="18dp"
+        android:paddingTop="10dp"
         android:text="TextView"
-        android:background="#FFFFFF" />
+        android:textSize="18dp" />
 
 </LinearLayout>

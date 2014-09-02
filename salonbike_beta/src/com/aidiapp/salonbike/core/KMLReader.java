@@ -38,7 +38,7 @@ public class KMLReader extends AsyncTask<InputSource,Integer,HashMap> {
 			sp = spf.newSAXParser();
 			XMLReader xr = sp.getXMLReader();
 			if(this.kmlType==BIKELANE){
-				coleccion=new HashMap<String,BikeLane>();
+				coleccion=new HashMap<Integer,BikeLane>();
 				KMLSaxHandler handler=new KMLSaxHandler(coleccion);
 				xr.setContentHandler(handler); 
 				xr.parse(params[0]);

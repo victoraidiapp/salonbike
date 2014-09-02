@@ -13,7 +13,7 @@ import android.content.res.AssetManager;
 
 public class DataManager {
 	public interface DataListener{
-		public void onLanesResult(HashMap<String,BikeLane> result);
+		public void onLanesResult(HashMap<Integer,BikeLane> result);
 	}
 	
 	
@@ -26,7 +26,8 @@ public class DataManager {
 				@Override
 				public void onDataResult(Object resultado) {
 					// TODO Auto-generated method stub
-					dataListener.onLanesResult((HashMap<String, BikeLane>) resultado);
+					
+					dataListener.onLanesResult((HashMap<Integer, BikeLane>) resultado);
 				}
 			});
 			reader.execute(inStream);
@@ -36,7 +37,7 @@ public class DataManager {
 		}
 		
 	}
-	public static ArrayList<HashMap<String,String>> lanesHashMaptoLanesList(HashMap<String,BikeLane> col){
+	public static ArrayList<HashMap<String,String>> lanesHashMaptoLanesList(HashMap<Integer,BikeLane> col){
 		ArrayList<HashMap<String,String>> r=new ArrayList();
 		Iterator it=col.entrySet().iterator();
 		
@@ -46,6 +47,7 @@ public class DataManager {
 			HashMap<String,String> valores=new HashMap();
 			valores.put("Nombre", bl.getName());
 			valores.put("Color", String.valueOf(bl.getColor()));
+			valores.put("IdLane", String.valueOf(e.getKey()));
 			r.add(valores);
 		}
 		return r;

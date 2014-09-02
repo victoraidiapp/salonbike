@@ -19,7 +19,7 @@ import android.widget.ListView;
 
 public class LanesPage extends Fragment implements OnItemClickListener {
 	public interface Listener{
-		public void onSelectLane(String l);
+		public void onSelectLane(Integer l);
 	}
 private ListView listado;
 private ArrayList<HashMap<String, String>> lanes;
@@ -61,6 +61,6 @@ public LanesPage() {
 public void onItemClick(AdapterView<?> adaptador, View arg1, int arg2, long arg3) {
 	// TODO Auto-generated method stub
 	HashMap<String,String> h=(HashMap<String, String>) adaptador.getItemAtPosition(arg2);
-	this.listener.onSelectLane(h.get("Nombre"));
+	this.listener.onSelectLane(Integer.valueOf(h.get("IdLane")));
 }
 }

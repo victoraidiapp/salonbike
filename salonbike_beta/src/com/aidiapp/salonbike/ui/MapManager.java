@@ -53,11 +53,11 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
 		public void onLoadingMap(Boolean estado);
-		public void onLoadLanesResult(HashMap<String,BikeLane> col);
+		public void onLoadLanesResult(HashMap<Integer,BikeLane> col);
 	}
 	private ActivityListener activityListener;
-	private HashMap<String,BikeLane>lanesZones;
-	private HashMap<String,PolyLineGroup>lanesZonesMaplines;
+	private HashMap<Integer,BikeLane>lanesZones;
+	private HashMap<Integer,PolyLineGroup>lanesZonesMaplines;
 	private Boolean flagLanesLayer=false;
 	
 	private ViewGroup container;
@@ -139,9 +139,9 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 				List puntos=(List) itc.next();
 				
 			
-				plg.addPolyline(puntos,bl.getName(),(Activity)this.getActivityListener());
+				plg.addPolyline(puntos,String.valueOf(bl.getIdLane()),(Activity)this.getActivityListener());
 			}
-			this.lanesZonesMaplines.put(bl.getName(), plg);
+			this.lanesZonesMaplines.put(bl.getIdLane(), plg);
 			i++;
 		}
 		if(this.flagLanesLayer) this.showLaneLayer();
@@ -170,7 +170,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		}
 		this.flagLanesLayer=false;
 	}
-public void showBikeLaneInfoDialog(String lane){
+public void showBikeLaneInfoDialog(Integer lane){
 	
 	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
 	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
@@ -201,10 +201,11 @@ public void showBikeLaneInfoDialog(String lane){
 
 
 	@Override
-	public void onLanesResult(HashMap<String, BikeLane> result) {
+	public void onLanesResult(HashMap<Integer, BikeLane> result) {
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Hemos Obtenido el resultado");
 		this.lanesZones=result;
+		
 		this.activityListener.onLoadLanesResult(result);
 		if(this.flagLanesLayer){
 			this.showLaneLayer();
@@ -216,7 +217,7 @@ public void showBikeLaneInfoDialog(String lane){
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Has picado en el marcador "+marker.getTitle());
-		this.showBikeLaneInfoDialog(marker.getTitle());
+		this.showBikeLaneInfoDialog(Integer.valueOf(marker.getTitle()));
 		return true;
 	}
 
