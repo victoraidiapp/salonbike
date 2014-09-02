@@ -154,7 +154,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/TextView02"
+            android:id="@+id/laneLength"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|left"

@@ -21,6 +21,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	private Boolean in_linestringtag=false;
 	private Boolean in_coordinatestag=false;
 	private Boolean in_colortag=false;
+	private Boolean in_lengthtag=false;
 	private HashMap coleccion;
 	private StringBuilder buffer;
 	private Object currentElement;
@@ -66,6 +67,8 @@ public class KMLSaxHandler extends DefaultHandler {
 	          this.in_coordinatestag = true;                        
 	      } else if(localName.equals("color")){
 	    	  this.in_colortag=true;
+	      } else if( localName.equals("length")){
+	    	  this.in_lengthtag=true;
 	      }
 		super.startElement(uri, localName, qName, attributes);
 	}
@@ -103,6 +106,8 @@ public class KMLSaxHandler extends DefaultHandler {
 	           
 	       }else if(localName.equals("color")){
 		    	  this.in_colortag=false;
+		      }else if( localName.equals("length")){
+		    	  this.in_lengthtag=false;
 		      }
 		super.endElement(uri, localName, qName);
 	}
@@ -124,6 +129,8 @@ public class KMLSaxHandler extends DefaultHandler {
 		    } else if(this.in_colortag){
 		    	if(this.currentElement instanceof BikeLane)
 		        	((BikeLane)currentElement).setColor(Color.parseColor(new String(ch,start,length)));
+		    }else if(this.in_lengthtag){
+		    	((BikeLane)currentElement).setLength(new String(ch, start, length));
 		    }else
 		    
 		    if(this.in_coordinatestag){  

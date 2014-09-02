@@ -6,7 +6,7 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 public class BikeLane {
 	private int idLane;
-	private String name,description;
+	private String name,description,length;
 	private ArrayList<ArrayList<LatLng>> carriles;
 	private int color;
 	public BikeLane() {
@@ -51,5 +51,11 @@ public class BikeLane {
 	}
 	public void setIdLane(int idLane) {
 		this.idLane = idLane;
+	}
+	public String getLength() {
+		return length;
+	}
+	public void setLength(String length) {
+		this.length = length;
 	}
 }

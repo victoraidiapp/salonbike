@@ -47,6 +47,7 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    // Pass null as the parent view because its going in the dialog layout
 View v=inflater.inflate(R.layout.laneinfodialog, null);
 ((TextView)v.findViewById(R.id.station_title)).setText(bl.getName());
+((TextView)v.findViewById(R.id.laneLength)).setText(bl.getLength());
 ((LinearLayout)v.findViewById(R.id.title_station_Dialog)).setBackgroundColor(bl.getColor());
 	    builder.setView(v);
 	    builder.setPositiveButton(R.string.dialog_route, this);
