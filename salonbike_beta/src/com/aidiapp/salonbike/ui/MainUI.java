@@ -45,6 +45,7 @@ import android.widget.ProgressBar;
 public class MainUI extends ActionBarActivity implements ActivityListener, Listener {
 	public final static String BIKESTATIONLAYER_STATE="com.aidiapp.salonbike.bikestationlayerstate";
 	public final static String BIKELANELAYER_STATE="com.aidiapp.salonbike.bikelanelayerstate";
+	public final static String CURRENTFRAGMENT="com.aidiapp.salonbike.currentfragment";
 	private MapManager mapMngr;
 	private LanesPage lanesPage;
 	private LinearLayout llLoadingIndicator;
@@ -80,15 +81,33 @@ public class MainUI extends ActionBarActivity implements ActivityListener, Liste
 		mapaOpts.camera(camera);
 		this.mapMngr=MapManager.newInstance(mapaOpts,this);
 		this.mapMngr.setActivityListener(this);
-		/*DECLARAMOS EL LANESPAGE*/
-		this.lanesPage=new LanesPage(this);
-		showMapManager();
 		//showLanesPage();
 		Log.d("MAINUI","Comprobamos el estado");
 		if(savedInstanceState!=null){
 			this.flagBikeLaneLayer=savedInstanceState.getBoolean(BIKELANELAYER_STATE);
 			this.flagBikeStationLayer=savedInstanceState.getBoolean(BIKESTATIONLAYER_STATE);
+			if(savedInstanceState.get(CURRENTFRAGMENT).equals("MapManager")){
+				//this.showMapManager();
+				
+				this.lanesPage=new LanesPage(this);
+				showMapManager();
+			}else if(savedInstanceState.get(CURRENTFRAGMENT).equals("LanesPage")){
+				
+				//this.gestorFragment.executePendingTransactions();
+				this.onLoadingMap(false);
+				this.lanesPage=(LanesPage) this.gestorFragment.findFragmentByTag("LanesPage");
+				this.lanesPage.setListener(this);
+				this.showLanesPage();
+				//this.showLanesPage();
+			}
 			
+		}else{
+			
+			
+			
+			/*DECLARAMOS EL LANESPAGE*/
+			this.lanesPage=new LanesPage(this);
+			showMapManager();
 		}
 	}
 	private void showMapManager() {
@@ -114,6 +133,7 @@ protected void onSaveInstanceState(Bundle outState) {
 	// TODO Auto-generated method stub
 	outState.putBoolean(MainUI.BIKELANELAYER_STATE, this.flagBikeLaneLayer);
 	outState.putBoolean(MainUI.BIKESTATIONLAYER_STATE, this.flagBikeStationLayer);
+	outState.putString(MainUI.CURRENTFRAGMENT, this.currentFragmentTag);
 	super.onSaveInstanceState(outState);
 }
 
@@ -208,6 +228,7 @@ protected void onSaveInstanceState(Bundle outState) {
 		}
 	}
 	private void loading(Boolean estado){
+		Log.d("MAINUI","LLaman al loading");
 		if(estado){
 			this.llLoadingIndicator.setVisibility(View.VISIBLE);
 		}else{
@@ -222,6 +243,7 @@ protected void onSaveInstanceState(Bundle outState) {
 	@Override
 	public void onLoadingMap(Boolean estado) {
 		// TODO Auto-generated method stub
+		Log.d("MAINUI","LLaman al loadingMap");
 		if(estado){
 			this.llLoadingIndicator.setVisibility(View.VISIBLE);
 			

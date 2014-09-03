@@ -84,6 +84,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		Log.d("MAPMANAGER","Creamos la vidsta");
 		View r=super.onCreateView(inflater, container, savedInstanceState);
 		this.container=container;
 		this.laneInfoDialog=new LaneInfoDialog();
@@ -113,7 +114,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		
 	private void loadLanesLines() {
 		// TODO Auto-generated method stub
-		
+		if(this.getMap()==null)return;
 		if(this.lanesZones!=null){
 			
 			
@@ -136,7 +137,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 			PolyLineGroup plg=new PolyLineGroup(this.getMap(),opciones);
 			ArrayList carriles=bl.getCarriles();
 			Iterator itc=carriles.iterator();
-			if(this.getActivity()==null){
+			if(this.getActivityListener()==null){
 				Log.d("MAPMANAGER","No hay contexto ");
 			}
 			while (itc.hasNext()){
