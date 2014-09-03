@@ -170,6 +170,11 @@ protected void onSaveInstanceState(Bundle outState) {
 			
 			return true;
 		}
+		if(id==R.id.btnShowBikeLanesNearest){
+			
+			this.mapMngr.showNearestLane();
+			return true;
+		}
 		
 		return super.onOptionsItemSelected(item);
 	}

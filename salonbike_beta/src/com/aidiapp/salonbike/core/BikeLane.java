@@ -1,6 +1,10 @@
 package com.aidiapp.salonbike.core;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
+import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -9,6 +13,52 @@ public class BikeLane {
 	private String name,description,length;
 	private ArrayList<ArrayList<LatLng>> carriles;
 	private int color;
+public static int getNearestLane(Location loc,HashMap<Integer,BikeLane> col){
+		int r=0;
+		float distance=100000000;
+		Iterator<Entry<Integer, BikeLane>> it=col.entrySet().iterator();
+		while(it.hasNext()){
+			Entry e=it.next();
+			Integer b=(Integer) e.getKey();
+			Iterator itb=((BikeLane)e.getValue()).getCarriles().iterator();
+			while(itb.hasNext()){
+				ArrayList lista=(ArrayList) itb.next();
+				//ArrayList<LatLng> puntos=(ArrayList<LatLng>) lista.iterator();
+				Iterator itp=lista.iterator();
+				while(itp.hasNext()){
+					LatLng pnt=(LatLng) itp.next();
+					Location loTarget=new Location("SALONBIKE");
+					loTarget.setLatitude(pnt.latitude);
+					loTarget.setLongitude(pnt.longitude);
+					if(loc.distanceTo(loTarget)<distance){
+						r=b;
+						distance=loc.distanceTo(loTarget);
+					}
+				}
+			}
+		}
+		return r;
+	}
+public static LatLng getNearestLanePosition(Location loc, ArrayList<ArrayList<LatLng>> carriles){
+	LatLng r=null;
+	float distancia=10000000;
+	Iterator it=carriles.iterator();
+	while(it.hasNext()){
+		ArrayList<LatLng> lista=(ArrayList<LatLng>) it.next();
+		Iterator itp=lista.iterator();
+		while(itp.hasNext()){
+			LatLng pnt=(LatLng) itp.next();
+			Location loTarget=new Location("SALONBIKE");
+			loTarget.setLatitude(pnt.latitude);
+			loTarget.setLongitude(pnt.longitude);
+			if(loc.distanceTo(loTarget)<distancia){
+				r=pnt;
+				distancia=loc.distanceTo(loTarget);
+			}
+		}
+	}
+	return r;
+}
 	public BikeLane() {
 		// TODO Auto-generated constructor stub
 		this.carriles=new ArrayList();
@@ -58,4 +108,6 @@ public class BikeLane {
 	public void setLength(String length) {
 		this.length = length;
 	}
+	
+	
 }

@@ -2,6 +2,7 @@ package com.aidiapp.salonbike.ui;
 
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
+import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LaneInfoDialog extends DialogFragment implements OnClickListener {
-private BikeLane bl;	
+public interface Listener{
+	public void onInitRouteToLane(Integer l);
+}
+	private BikeLane bl;	
 private Dialog d;
+private Listener listener;
 	public void setBikeLane(BikeLane bikeLane) {
 		// TODO Auto-generated method stub
 this.bl=bikeLane;
@@ -46,7 +53,10 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
 View v=inflater.inflate(R.layout.laneinfodialog, null);
-((TextView)v.findViewById(R.id.station_title)).setText(bl.getName());
+SpannableString s = new SpannableString(bl.getName());
+s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+((TextView)v.findViewById(R.id.station_title)).setText(s);
 ((TextView)v.findViewById(R.id.laneLength)).setText(bl.getLength());
 ((LinearLayout)v.findViewById(R.id.title_station_Dialog)).setBackgroundColor(bl.getColor());
 	    builder.setView(v);
@@ -66,7 +76,15 @@ View v=inflater.inflate(R.layout.laneinfodialog, null);
 public void onClick(DialogInterface arg0, int arg1) {
 	// TODO Auto-generated method stub
 	Log.d("LANEINFODIALOG","Has picado en "+arg1);
-	
+	if(arg1==-1){
+	this.listener.onInitRouteToLane(bl.getIdLane());
+	}
+}
+public Listener getListener() {
+	return listener;
+}
+public void setListener(Listener listener) {
+	this.listener = listener;
 }
  
 }

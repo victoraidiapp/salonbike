@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -27,6 +28,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Spannable;
@@ -45,10 +48,11 @@ import android.widget.TextView;
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
 import com.aidiapp.salonbike.core.DataManager;
+import com.aidiapp.salonbike.ui.LaneInfoDialog.Listener;
 import com.aidiapp.salonbike.ui.utils.ImageUtils;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
-public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener {
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener, Listener {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
@@ -173,6 +177,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 public void showBikeLaneInfoDialog(Integer lane){
 	
 	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
+	this.laneInfoDialog.setListener(this);
 	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
 }
 	@Override
@@ -180,7 +185,7 @@ public void showBikeLaneInfoDialog(Integer lane){
 		// TODO Auto-generated method stub
 		this.getActivityListener().onLoadingMap(false);
 		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-		
+		this.getMap().setMyLocationEnabled(true);
 		this.getMap().setOnMarkerClickListener(this);
 		if(this.flagLanesLayer){
 			Log.d("MAPMANAGER","Tenemos que mostrar la capa de carriles");
@@ -229,6 +234,30 @@ public void onAttach(Activity activity) {
 	this.lanesZonesMaplines=null;
 	
 	super.onAttach(activity);
+}
+
+
+public void showNearestLane() {
+	// TODO Auto-generated method stub
+	Location loc=this.getMap().getMyLocation();
+	int l=BikeLane.getNearestLane(loc, this.lanesZones);
+	Log.d("MAPAMANAGER", "El lane más cercano es "+l);
+	this.showBikeLaneInfoDialog(l);
+}
+
+
+@Override
+public void onInitRouteToLane(Integer l) {
+	// TODO Auto-generated method stub
+	Location current=this.getMap().getMyLocation();
+	LatLng p=BikeLane.getNearestLanePosition(current, this.lanesZones.get(l).getCarriles());
+	Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
+	Intent intent = new Intent( Intent.ACTION_VIEW, 
+            Uri.parse("http://ditu.google.cn/maps?f=d&source=s_d" +
+            "&saddr="+current.getLatitude()+","+current.getLongitude()+"&daddr="+p.latitude+","+p.longitude+"&hl=zh&t=m&dirflg=w")); 
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+    startActivity(intent);
 }
 
 
