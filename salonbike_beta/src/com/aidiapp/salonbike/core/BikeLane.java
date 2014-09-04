@@ -1,4 +1,5 @@
 package com.aidiapp.salonbike.core;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,7 +9,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-public class BikeLane {
+public class BikeLane implements Serializable {
 	private int idLane;
 	private String name,description,length;
 	private ArrayList<ArrayList<LatLng>> carriles;

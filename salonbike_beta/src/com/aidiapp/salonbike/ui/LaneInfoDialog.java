@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LaneInfoDialog extends DialogFragment implements OnClickListener {
+	public static final String CARRIL="com.aidiapp.salonbike.carril";
 public interface Listener{
 	public void onInitRouteToLane(Integer l);
 }
@@ -53,6 +54,9 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
 View v=inflater.inflate(R.layout.laneinfodialog, null);
+if(savedInstanceState!=null){
+	this.bl=(BikeLane) savedInstanceState.getSerializable(CARRIL);
+}
 SpannableString s = new SpannableString(bl.getName());
 s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -87,4 +91,10 @@ public void setListener(Listener listener) {
 	this.listener = listener;
 }
  
+@Override
+	public void onSaveInstanceState(Bundle arg0) {
+		// TODO Auto-generated method stub
+	arg0.putSerializable(CARRIL, this.bl);
+		super.onSaveInstanceState(arg0);
+	}
 }
