@@ -18,6 +18,12 @@ public class KMLSaxHandler extends DefaultHandler {
 	private Boolean in_nametag=false;
 	private Boolean in_descriptiontag=false;
 	private Boolean in_placemarktag=false;
+	private Boolean in_markertag=false;
+	private Boolean in_candadostag=false;
+	private Boolean in_bicicletastag=false;
+	private Boolean in_estadotag=false;
+	private Boolean in_lattag=false;
+	private Boolean in_lngtag=false;	
 	private Boolean in_linestringtag=false;
 	private Boolean in_coordinatestag=false;
 	private Boolean in_colortag=false;
@@ -27,10 +33,11 @@ public class KMLSaxHandler extends DefaultHandler {
 	private Object currentElement;
 	private int count;
 	
-	public KMLSaxHandler(HashMap<Integer,BikeLane> carriles) {
+	public KMLSaxHandler(HashMap col) {
 		// TODO Auto-generated constructor stub
-		this.coleccion=carriles;
+		this.coleccion=col;
 	}
+	
 	@Override
 	public void startDocument() throws SAXException {
 		// TODO Auto-generated method stub
@@ -48,7 +55,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		// TODO Auto-generated method stub
-		// Log.d("SAXHANDLER", "Queremos abrir la etiqueta "+localName);
+	//	Log.d("SAXHANDLER", "Queremos abrir la etiqueta "+localName);
 	      if (localName.equals("LanesZone")) { 
 	           this.in_laneszonetag = true;
 	           this.currentElement=new BikeLane();
@@ -68,7 +75,28 @@ public class KMLSaxHandler extends DefaultHandler {
 	      } else if(localName.equals("color")){
 	    	  this.in_colortag=true;
 	      } else if( localName.equals("length")){
+	    	  
 	    	  this.in_lengthtag=true;
+	      } else if( localName.equals("marker")){
+	    	  this.currentElement=new BikeStation();
+	    	//  Log.d("SAXHANDLER","Creamos una nueva BikeStation");
+	    	  ((BikeStation)this.currentElement).setNombre(attributes.getValue("nombre"));
+	    	  ((BikeStation)this.currentElement).setBicicletas(Integer.valueOf(attributes.getValue("bicicletas")));
+	    	  ((BikeStation)this.currentElement).setCandados(Integer.valueOf(attributes.getValue("candadosLibres")));
+	    	  ((BikeStation)this.currentElement).setEstado(Integer.valueOf(attributes.getValue("estado")));
+	    	  ((BikeStation)this.currentElement).setLat(Double.valueOf(attributes.getValue("lat")));
+	    	  ((BikeStation)this.currentElement).setLng(Double.valueOf(attributes.getValue("lng")));
+	    	  this.in_markertag=true;
+	      } else if( localName.equals("candados")){
+	    	  this.in_candadostag=true;
+	      } else if( localName.equals("bicicletas")){
+	    	  this.in_bicicletastag=true;
+	      }else if( localName.equals("estado")){
+	    	  this.in_estadotag=true;
+	      }else if( localName.equals("lat")){
+	    	  this.in_lattag=true;
+	      }else if( localName.equals("lng")){
+	    	  this.in_lngtag=true;
 	      }
 		super.startElement(uri, localName, qName, attributes);
 	}
@@ -81,8 +109,9 @@ public class KMLSaxHandler extends DefaultHandler {
 	       if (localName.equals("LanesZone")) {
 	           this.in_laneszonetag = false; 
 	           if(this.currentElement instanceof BikeLane)
-	        	   Log.d("SAXHANDLER","añadimos el carril "+((BikeLane)this.currentElement).getIdLane()+" que es el de "+((BikeLane)this.currentElement).getName());
+	        	//   Log.d("SAXHANDLER","añadimos el carril "+((BikeLane)this.currentElement).getIdLane()+" que es el de "+((BikeLane)this.currentElement).getName());
 	        	   this.coleccion.put(((BikeLane)this.currentElement).getIdLane(), this.currentElement);
+	        	   
 	           this.currentElement=null;
 	           this.count++;
 	       } else if (localName.equals("Placemark")) { 
@@ -109,6 +138,23 @@ public class KMLSaxHandler extends DefaultHandler {
 		      }else if( localName.equals("length")){
 		    	  this.in_lengthtag=false;
 		      }
+		      else if( localName.equals("marker")){
+		    	  ((BikeStation)this.currentElement).setIdStation(count);
+		    	  this.coleccion.put(((BikeStation)this.currentElement).getIdStation(), this.currentElement);
+		    	  this.currentElement=null;
+		    	  this.count++;
+		    	  this.in_markertag=false;
+		      } else if( localName.equals("candados")){
+		    	  this.in_candadostag=false;
+		      } else if( localName.equals("bicicletas")){
+		    	  this.in_bicicletastag=false;
+		      }else if( localName.equals("estado")){
+		    	  this.in_estadotag=false;
+		      }else if( localName.equals("lat")){
+		    	  this.in_lattag=false;
+		      }else if( localName.equals("lng")){
+		    	  this.in_lngtag=false;
+		      }
 		super.endElement(uri, localName, qName);
 	}
 	
@@ -117,11 +163,15 @@ public class KMLSaxHandler extends DefaultHandler {
 			throws SAXException {
 		
 		 if(this.in_nametag){ 
-		        if(this.currentElement instanceof BikeLane && !this.in_placemarktag)
+		        if(this.currentElement instanceof BikeLane && !this.in_placemarktag){
 		        	((BikeLane)currentElement).setName(new String(ch, start, length));
-		        Log.d("SAXHANDLER","Estamos creando el lane "+this.count+" con el nombre "+((BikeLane)currentElement).getName());
+		    //    Log.d("SAXHANDLER","Estamos creando el lane "+this.count+" con el nombre "+((BikeLane)currentElement).getName());
 		        ((BikeLane)currentElement).setIdLane(this.count);
-		        
+		        }else if(this.currentElement instanceof BikeStation){
+		        	((BikeStation)currentElement).setIdStation(count);
+			    	((BikeStation)currentElement).setNombre(new String(ch, start, length));
+			  //  	Log.d("SAXHANDLER","Estamos creando el lane "+this.count+" con el nombre "+((BikeStation)currentElement).getNombre());
+		        }
 		                  
 		    } else if(this.in_descriptiontag){
 		    	if(this.currentElement instanceof BikeLane)
@@ -130,13 +180,29 @@ public class KMLSaxHandler extends DefaultHandler {
 		    	if(this.currentElement instanceof BikeLane)
 		        	((BikeLane)currentElement).setColor(Color.parseColor(new String(ch,start,length)));
 		    }else if(this.in_lengthtag){
+		    	if(this.currentElement instanceof BikeLane)
 		    	((BikeLane)currentElement).setLength(new String(ch, start, length));
-		    }else
-		    
-		    if(this.in_coordinatestag){  
+		    }else if(this.in_coordinatestag){  
 		    	
 		        
 		        buffer.append(new String(ch,start,length));
+		    }else if(this.in_markertag){
+		    	
+		    }else if(this.in_bicicletastag){
+		    	
+		    	((BikeStation)currentElement).setBicicletas(Integer.valueOf(new String(ch, start, length)));
+		    }else if(this.in_candadostag){
+		    	
+		    	((BikeStation)currentElement).setCandados(Integer.valueOf(new String(ch, start, length)));
+		    }else if(this.in_estadotag){
+		    	
+		    	((BikeStation)currentElement).setEstado(Integer.valueOf(new String(ch, start, length)));
+		    }else if(this.in_lattag){
+		    	
+		    	((BikeStation)currentElement).setLat(Double.valueOf(new String(ch, start, length)));
+		    }else if(this.in_lngtag){
+		    	
+		    	((BikeStation)currentElement).setLng(Double.valueOf(new String(ch, start, length)));
 		    }
 	} 
 }

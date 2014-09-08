@@ -47,6 +47,7 @@ import android.widget.TextView;
 
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
+import com.aidiapp.salonbike.core.BikeStation;
 import com.aidiapp.salonbike.core.DataManager;
 import com.aidiapp.salonbike.ui.LaneInfoDialog.Listener;
 import com.aidiapp.salonbike.ui.utils.ImageUtils;
@@ -75,7 +76,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	    fragment.setArguments(arguments);
 	    
 	    DataManager.getLanes(fragment,((Activity)activityListener).getAssets());
-	    
+	    DataManager.getBikeStations(fragment);
 	    return fragment;
 	}
 	
@@ -259,6 +260,18 @@ public void onInitRouteToLane(Integer l) {
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
     startActivity(intent);
+}
+
+
+@Override
+public void onBikeResult(HashMap<Integer, BikeStation> result) {
+	// TODO Auto-generated method stub
+	Iterator it=result.entrySet().iterator();
+	while (it.hasNext()){
+		Entry e=(Entry) it.next();
+		BikeStation bs=(BikeStation) e.getValue();
+		Log.d("MAPMANAGER","Hemos cargado el intercambiador "+bs.getNombre());
+	}
 }
 
 
