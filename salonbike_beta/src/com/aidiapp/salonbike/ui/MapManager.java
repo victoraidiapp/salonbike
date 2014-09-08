@@ -16,6 +16,7 @@ import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.app.Activity;
@@ -62,8 +63,11 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	}
 	private ActivityListener activityListener;
 	private HashMap<Integer,BikeLane>lanesZones;
+	private HashMap<Integer,BikeStation>bikeStations;
+	private HashMap<Integer,Marker> stationMarkersGroup;
 	private HashMap<Integer,PolyLineGroup>lanesZonesMaplines;
 	private Boolean flagLanesLayer=false;
+	private Boolean flagStationsLayer=false;
 	
 	private ViewGroup container;
 	private LaneInfoDialog laneInfoDialog;
@@ -157,11 +161,50 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	
 	public void showBikeStationsLayer() {
 		// Muestra la capa de intercambiadores
+		if(this.getMap()==null)return;
+		this.flagStationsLayer=true;
+		if(this.stationMarkersGroup==null){
+			this.loadBikeStations();
+		}else{
+			if(!this.stationMarkersGroup.isEmpty()){
+				Iterator it=this.stationMarkersGroup.entrySet().iterator();
+				while(it.hasNext()){
+					Entry e=(Entry) it.next();
+					((Marker)e.getValue()).setVisible(true);
+				}
+			}
+		}
 		
 	}
+	private void loadBikeStations() {
+		// TODO Auto-generated method stub
+		if(this.bikeStations!=null){
+			this.stationMarkersGroup=new HashMap();
+			Iterator it=this.bikeStations.entrySet().iterator();
+			int i=1;
+			while(it.hasNext()){
+				Entry e=(Entry) it.next();
+				BikeStation bs=(BikeStation) e.getValue();
+				Marker m=this.getMap().addMarker(new MarkerOptions().position(bs.getUbicacion()));
+				this.stationMarkersGroup.put(i, m);
+				m.setVisible(false);
+				i++;
+			}
+			if(this.flagStationsLayer) this.showBikeStationsLayer();
+		}
+	}
+
+
 	public void hideBikeStationsLayer() {
 		// TODO Auto-generated method stub
-		
+		if(this.stationMarkersGroup!=null){
+			Iterator it=this.stationMarkersGroup.entrySet().iterator();
+			while(it.hasNext()){
+				Entry e=(Entry) it.next();
+				((Marker)e.getValue()).setVisible(false);
+			}
+		}
+		this.flagStationsLayer=false;
 	}
 	public void hideBikeLanesLayer() {
 		// TODO Auto-generated method stub
@@ -195,6 +238,9 @@ public void showBikeLaneInfoDialog(Integer lane){
 			
 		}
 		
+		if(this.flagStationsLayer){
+			this.showBikeStationsLayer();
+		}
 		
 	}
 
@@ -266,11 +312,9 @@ public void onInitRouteToLane(Integer l) {
 @Override
 public void onBikeResult(HashMap<Integer, BikeStation> result) {
 	// TODO Auto-generated method stub
-	Iterator it=result.entrySet().iterator();
-	while (it.hasNext()){
-		Entry e=(Entry) it.next();
-		BikeStation bs=(BikeStation) e.getValue();
-		Log.d("MAPMANAGER","Hemos cargado el intercambiador "+bs.getNombre());
+	this.bikeStations=result;
+	if(this.flagStationsLayer){
+		this.showBikeStationsLayer();
 	}
 }
 
