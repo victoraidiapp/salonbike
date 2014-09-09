@@ -14,6 +14,7 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -54,7 +55,7 @@ import com.aidiapp.salonbike.ui.LaneInfoDialog.Listener;
 import com.aidiapp.salonbike.ui.utils.ImageUtils;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
-public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener, Listener {
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener, Listener, com.aidiapp.salonbike.ui.BikeStationDialog.Listener {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
@@ -71,6 +72,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	
 	private ViewGroup container;
 	private LaneInfoDialog laneInfoDialog;
+	private BikeStationDialog bikeStationDialog;
 	public static MapManager newInstance(GoogleMapOptions opciones,ActivityListener activityListener){
 		Bundle arguments = new Bundle();
 	    arguments.putParcelable(SUPPORT_MAP_BUNDLE_KEY, opciones);
@@ -93,6 +95,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		View r=super.onCreateView(inflater, container, savedInstanceState);
 		this.container=container;
 		this.laneInfoDialog=new LaneInfoDialog();
+		this.bikeStationDialog=new BikeStationDialog();
 		this.getMap().setOnMapLoadedCallback(this);
 		return r;
 	}
@@ -181,13 +184,15 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		if(this.bikeStations!=null){
 			this.stationMarkersGroup=new HashMap();
 			Iterator it=this.bikeStations.entrySet().iterator();
-			int i=1;
+			int i=101;
 			while(it.hasNext()){
 				Entry e=(Entry) it.next();
 				BikeStation bs=(BikeStation) e.getValue();
 				Marker m=this.getMap().addMarker(new MarkerOptions().position(bs.getUbicacion()));
 				this.stationMarkersGroup.put(i, m);
+				m.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.show_bike_stations));
 				m.setVisible(false);
+				m.setTitle(String.valueOf(i));
 				i++;
 			}
 			if(this.flagStationsLayer) this.showBikeStationsLayer();
@@ -270,9 +275,25 @@ public void showBikeLaneInfoDialog(Integer lane){
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		Log.d("MAPMANAGER","Has picado en el marcador "+marker.getTitle());
-		this.showBikeLaneInfoDialog(Integer.valueOf(marker.getTitle()));
+		int i=Integer.valueOf(marker.getTitle());
+		if(i<100){
+		this.showBikeLaneInfoDialog(i);
+		}else{
+			this.showBikeStationInfoDialog(i);
+		}
 		return true;
 	}
+
+private void showBikeStationInfoDialog(int i) {
+		// TODO Auto-generated method stub
+	Log.d("MAPMANAGER","Queremos mostrar la station "+i);
+	BikeStation bs=this.bikeStations.get(Integer.valueOf(i-100));
+	Log.d("MAPMANAGER","La station es "+bs.getNombre());
+	this.bikeStationDialog.setBikeStation(bs);
+	this.bikeStationDialog.setListener(this);
+	this.bikeStationDialog.show(getFragmentManager(), "BikeStationInfoDialog");
+	}
+
 
 @Override
 public void onAttach(Activity activity) {
@@ -316,6 +337,13 @@ public void onBikeResult(HashMap<Integer, BikeStation> result) {
 	if(this.flagStationsLayer){
 		this.showBikeStationsLayer();
 	}
+}
+
+
+@Override
+public void onInitRouteToStation(Integer l) {
+	// TODO Auto-generated method stub
+	
 }
 
 

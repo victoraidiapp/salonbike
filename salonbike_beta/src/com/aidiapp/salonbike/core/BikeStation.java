@@ -1,8 +1,10 @@
 package com.aidiapp.salonbike.core;
 
+import java.io.Serializable;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class BikeStation {
+public class BikeStation implements Serializable {
 	private int candados,bicicletas,estado,idStation;
 	private double lat=0;
 	private double lng=0;

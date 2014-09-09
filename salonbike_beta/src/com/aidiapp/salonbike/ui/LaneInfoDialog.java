@@ -2,6 +2,7 @@ package com.aidiapp.salonbike.ui;
 
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
+import com.aidiapp.salonbike.core.BikeStation;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
 import android.app.AlertDialog;
@@ -97,4 +98,5 @@ public void setListener(Listener listener) {
 	arg0.putSerializable(CARRIL, this.bl);
 		super.onSaveInstanceState(arg0);
 	}
+
 }
