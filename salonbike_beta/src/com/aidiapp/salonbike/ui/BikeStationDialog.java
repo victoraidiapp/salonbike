@@ -3,7 +3,10 @@ package com.aidiapp.salonbike.ui;
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
 import com.aidiapp.salonbike.core.BikeStation;
+import com.aidiapp.salonbike.core.BikeStation.CalculatorListener;
+import com.aidiapp.salonbike.core.BikeStation.DistanceCalculator;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,9 +20,10 @@ import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class BikeStationDialog extends DialogFragment implements OnClickListener{
+public class BikeStationDialog extends DialogFragment implements OnClickListener, CalculatorListener{
 	public static final String STATION="com.aidiapp.salonbike.station";
 	public interface Listener{
 		public void onInitRouteToStation(Integer l);
@@ -27,6 +31,10 @@ public class BikeStationDialog extends DialogFragment implements OnClickListener
 	private BikeStation bikeStation;
 	private Listener listener;
 	private Dialog dialog;
+	private LatLng current;
+	private BikeStation.DistanceCalculator distance;
+	private TextView tvDistancia;
+	private ProgressBar loadingDistance;
 	public BikeStation getBikeStation() {
 		return bikeStation;
 	}
@@ -61,9 +69,14 @@ s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
 
 ((TextView)v.findViewById(R.id.candadosValue)).setText(String.valueOf(this.bikeStation.getCandados()));
 ((TextView)v.findViewById(R.id.bikesValue)).setText(String.valueOf(this.bikeStation.getBicicletas()));
+this.tvDistancia=(TextView) v.findViewById(R.id.distanceToStation);
+this.loadingDistance=(ProgressBar) v.findViewById(R.id.loadingDistance);
+this.bikeStation.calculador= this.bikeStation.new DistanceCalculator(this);
+this.bikeStation.calculador.execute(this.current,this.bikeStation.getUbicacion());
 	    builder.setView(v);
 	    builder.setPositiveButton(R.string.dialog_route, this);
 	    builder.setNegativeButton(R.string.button_back, this);
+	    
 	    this.dialog=builder.create();
 	    
 	    return dialog;
@@ -78,5 +91,20 @@ s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
 		// TODO Auto-generated method stub
 	arg0.putSerializable(STATION, this.bikeStation);
 		super.onSaveInstanceState(arg0);
+	}
+	@Override
+	public void onResult(String r) {
+		// TODO Auto-generated method stub
+		
+		this.tvDistancia.setText(r);
+		this.tvDistancia.setVisibility(View.VISIBLE);
+		this.loadingDistance.setVisibility(View.GONE);
+		
+	}
+	public LatLng getCurrent() {
+		return current;
+	}
+	public void setCurrent(LatLng current) {
+		this.current = current;
 	}
 }

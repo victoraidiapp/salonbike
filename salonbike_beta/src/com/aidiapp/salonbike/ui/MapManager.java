@@ -290,6 +290,8 @@ private void showBikeStationInfoDialog(int i) {
 	BikeStation bs=this.bikeStations.get(Integer.valueOf(i-100));
 	Log.d("MAPMANAGER","La station es "+bs.getNombre());
 	this.bikeStationDialog.setBikeStation(bs);
+	Location loc=this.getMap().getMyLocation();
+	this.bikeStationDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
 	this.bikeStationDialog.setListener(this);
 	this.bikeStationDialog.show(getFragmentManager(), "BikeStationInfoDialog");
 	}

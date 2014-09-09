@@ -62,7 +62,7 @@ SpannableString s = new SpannableString(bl.getName());
 s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 ((TextView)v.findViewById(R.id.station_title)).setText(s);
-((TextView)v.findViewById(R.id.laneLength)).setText(bl.getLength());
+((TextView)v.findViewById(R.id.distanceToStation)).setText(bl.getLength());
 ((LinearLayout)v.findViewById(R.id.title_station_Dialog)).setBackgroundColor(bl.getColor());
 	    builder.setView(v);
 	    builder.setPositiveButton(R.string.dialog_route, this);
