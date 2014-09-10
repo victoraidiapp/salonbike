@@ -59,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
             android:text="@string/dialog_detail_station_locks"
             android:textSize="16sp" />
 
@@ -67,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="5dp"
             android:gravity="center|left"
             android:text="carga_valor"
             android:textSize="16sp"
@@ -102,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
+            android:layout_marginLeft="10dp"
             android:text="@string/dialog_detail_station_bikes"
             android:textSize="16sp" />
 
@@ -110,11 +113,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|left"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="carga_valor"
             android:textSize="16sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -145,19 +150,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
             android:text="@string/dialog_station_nearest"
             android:textSize="16sp" />
 
         <ProgressBar
             android:id="@+id/loadingDistance"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" />
 
         <TextView
             android:id="@+id/distanceToStation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|left"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="carga_valor"

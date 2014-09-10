@@ -219,6 +219,7 @@ protected void onSaveInstanceState(Bundle outState) {
 
 	private void checkBikeStationLayer(MenuItem item) {
 		if(this.flagBikeStationLayer){
+			Log.d("MAINUI","Vamos a motrar el texto de menu "+this.getResources().getText(R.string.show_bikes_stations));
 			item.setTitle(this.getResources().getText(R.string.show_bikes_stations));
 		item.setChecked(false);
 			this.mapMngr.hideBikeStationsLayer();

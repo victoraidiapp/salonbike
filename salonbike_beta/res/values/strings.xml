@@ -4,8 +4,8 @@
     <string name="app_name">SalOnBike</string>
     <string name="loading_content">Cargando contenido</string>
     <string name="location_service">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
-    <string name="show_bikes_stations">Mostrar Intercambiadores</string>
-    <string name="hide_bikes_stations">Ocultar Intercambiadores</string>
+    <string name="show_bikes_stations">Mostrar Estaciones</string>
+    <string name="hide_bikes_stations">Ocultar Estaciones</string>
     <string name="back_to_map">Volver al mapa</string>
     <string name="show_bikes_lanes">Mostrar Carril Bici</string>
     <string name="hide_bikes_lanes">Ocultar Carril Bici</string>
