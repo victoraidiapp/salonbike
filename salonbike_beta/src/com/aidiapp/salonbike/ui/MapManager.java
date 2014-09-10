@@ -345,7 +345,16 @@ public void onBikeResult(HashMap<Integer, BikeStation> result) {
 @Override
 public void onInitRouteToStation(Integer l) {
 	// TODO Auto-generated method stub
-	
+	// TODO Auto-generated method stub
+		Location current=this.getMap().getMyLocation();
+		LatLng p=this.bikeStations.get(l).getUbicacion();
+		Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
+		Intent intent = new Intent( Intent.ACTION_VIEW, 
+	            Uri.parse("http://ditu.google.cn/maps?f=d&source=s_d" +
+	            "&saddr="+current.getLatitude()+","+current.getLongitude()+"&daddr="+p.latitude+","+p.longitude+"&hl=zh&t=m&dirflg=w")); 
+	    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+	    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+	    startActivity(intent);
 }
 
 

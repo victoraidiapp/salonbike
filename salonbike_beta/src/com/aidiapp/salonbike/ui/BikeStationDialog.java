@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 public class BikeStationDialog extends DialogFragment implements OnClickListener, CalculatorListener{
 	public static final String STATION="com.aidiapp.salonbike.station";
+	public static final String DISTANCIA="com.aidiapp.salonbike.distancia";
 	public interface Listener{
 		public void onInitRouteToStation(Integer l);
 	}
@@ -35,6 +37,7 @@ public class BikeStationDialog extends DialogFragment implements OnClickListener
 	private BikeStation.DistanceCalculator distance;
 	private TextView tvDistancia;
 	private ProgressBar loadingDistance;
+	private String distancia;
 	public BikeStation getBikeStation() {
 		return bikeStation;
 	}
@@ -59,8 +62,14 @@ public class BikeStationDialog extends DialogFragment implements OnClickListener
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
 View v=inflater.inflate(R.layout.bikestationdialog, null);
+
 if(savedInstanceState!=null){
 	this.bikeStation=(BikeStation) savedInstanceState.getSerializable(STATION);
+	
+}else{
+	Log.d("BIKESTATIONDIALOG","Iniciamos el calculo de la distancia");
+	this.bikeStation.calculador= this.bikeStation.new DistanceCalculator(this);
+	this.bikeStation.calculador.execute(this.current,this.bikeStation.getUbicacion());
 }
 SpannableString s = new SpannableString(this.bikeStation.getNombre());
 s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
@@ -71,35 +80,43 @@ s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
 ((TextView)v.findViewById(R.id.bikesValue)).setText(String.valueOf(this.bikeStation.getBicicletas()));
 this.tvDistancia=(TextView) v.findViewById(R.id.distanceToStation);
 this.loadingDistance=(ProgressBar) v.findViewById(R.id.loadingDistance);
-this.bikeStation.calculador= this.bikeStation.new DistanceCalculator(this);
-this.bikeStation.calculador.execute(this.current,this.bikeStation.getUbicacion());
+
 	    builder.setView(v);
 	    builder.setPositiveButton(R.string.dialog_route, this);
 	    builder.setNegativeButton(R.string.button_back, this);
 	    
 	    this.dialog=builder.create();
-	    
+	    if(savedInstanceState!=null){
+	    	this.distancia=savedInstanceState.getString(DISTANCIA);
+	    	this.updateDistancia();
+	    }
 	    return dialog;
 	}
 	@Override
 	public void onClick(DialogInterface arg0, int arg1) {
 		// TODO Auto-generated method stub
-		
+		if(arg1==-1){
+			this.listener.onInitRouteToStation(this.bikeStation.getIdStation());
+			}
 	}
 	
 	public void onSaveInstanceState(Bundle arg0) {
 		// TODO Auto-generated method stub
 	arg0.putSerializable(STATION, this.bikeStation);
+	arg0.putString(DISTANCIA, this.distancia);
 		super.onSaveInstanceState(arg0);
 	}
 	@Override
 	public void onResult(String r) {
 		// TODO Auto-generated method stub
+		this.distancia=r;
+		this.updateDistancia();
 		
-		this.tvDistancia.setText(r);
+	}
+	private void updateDistancia() {
+		this.tvDistancia.setText(this.distancia);
 		this.tvDistancia.setVisibility(View.VISIBLE);
 		this.loadingDistance.setVisibility(View.GONE);
-		
 	}
 	public LatLng getCurrent() {
 		return current;
