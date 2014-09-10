@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.location.Location;
 import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -139,6 +143,27 @@ public class BikeStation implements Serializable {
 			this.listener.onResult(result);
 			super.onPostExecute(result);
 		}
+	}
+
+	public static int getNearestStation(Location loc,
+			HashMap<Integer, BikeStation> bikeStations) {
+		// TODO Auto-generated method stub
+		int r=0;
+		float distance=100000000;
+		Iterator it=bikeStations.entrySet().iterator();
+		while(it.hasNext()){
+			Entry e=(Entry) it.next();
+			BikeStation bs=(BikeStation) e.getValue();
+			LatLng pnt=(LatLng) bs.ubicacion;
+			Location loTarget=new Location("SALONBIKE");
+			loTarget.setLatitude(pnt.latitude);
+			loTarget.setLongitude(pnt.longitude);
+			if(loc.distanceTo(loTarget)<distance){
+				r=bs.getIdStation();
+				distance=loc.distanceTo(loTarget);
+			}
+		}
+		return r;
 	}
 
 }

@@ -358,6 +358,16 @@ public void onInitRouteToStation(Integer l) {
 }
 
 
+public void showNearestStation() {
+	// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
+		Location loc=this.getMap().getMyLocation();
+		int l=BikeStation.getNearestStation(loc, this.bikeStations);
+		Log.d("MAPAMANAGER", "La station más cercano es "+l);
+		this.showBikeStationInfoDialog(l+100);
+}
+
+
 
 	
 }
