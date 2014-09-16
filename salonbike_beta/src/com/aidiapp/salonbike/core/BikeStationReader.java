@@ -58,7 +58,7 @@ public class BikeStationReader extends AsyncTask<URI,Integer,String> {
 		// TODO Auto-generated method stub
 		
 		if(result==null)Log.d("BIKESTATIONREADER","El resultado es nulo");
-		
+		Log.d("BIKESTATIONREADER","El resultado es "+result);
 		this.listener.onDataResult(result);
 		super.onPostExecute(result);
 	}

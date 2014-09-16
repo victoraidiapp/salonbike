@@ -18,7 +18,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	private Boolean in_nametag=false;
 	private Boolean in_descriptiontag=false;
 	private Boolean in_placemarktag=false;
-	private Boolean in_markertag=false;
+	private Boolean in_paradatag=false;
 	private Boolean in_candadostag=false;
 	private Boolean in_bicicletastag=false;
 	private Boolean in_estadotag=false;
@@ -77,7 +77,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	      } else if( localName.equals("length")){
 	    	  
 	    	  this.in_lengthtag=true;
-	      } else if( localName.equals("marker")){
+	      } else if( localName.equals("parada")){
 	    	  this.currentElement=new BikeStation();
 	    	//  Log.d("SAXHANDLER","Creamos una nueva BikeStation");
 	    	  ((BikeStation)this.currentElement).setNombre(attributes.getValue("nombre"));
@@ -86,17 +86,7 @@ public class KMLSaxHandler extends DefaultHandler {
 	    	  ((BikeStation)this.currentElement).setEstado(Integer.valueOf(attributes.getValue("estado")));
 	    	  ((BikeStation)this.currentElement).setLat(Double.valueOf(attributes.getValue("lat")));
 	    	  ((BikeStation)this.currentElement).setLng(Double.valueOf(attributes.getValue("lng")));
-	    	  this.in_markertag=true;
-	      } else if( localName.equals("candados")){
-	    	  this.in_candadostag=true;
-	      } else if( localName.equals("bicicletas")){
-	    	  this.in_bicicletastag=true;
-	      }else if( localName.equals("estado")){
-	    	  this.in_estadotag=true;
-	      }else if( localName.equals("lat")){
-	    	  this.in_lattag=true;
-	      }else if( localName.equals("lng")){
-	    	  this.in_lngtag=true;
+	    	  this.in_paradatag=true;
 	      }
 		super.startElement(uri, localName, qName, attributes);
 	}
@@ -138,23 +128,14 @@ public class KMLSaxHandler extends DefaultHandler {
 		      }else if( localName.equals("length")){
 		    	  this.in_lengthtag=false;
 		      }
-		      else if( localName.equals("marker")){
+		      else if( localName.equals("parada")){
 		    	  ((BikeStation)this.currentElement).setIdStation(count);
 		    	  this.coleccion.put(((BikeStation)this.currentElement).getIdStation(), this.currentElement);
 		    	  this.currentElement=null;
 		    	  this.count++;
-		    	  this.in_markertag=false;
-		      } else if( localName.equals("candados")){
-		    	  this.in_candadostag=false;
-		      } else if( localName.equals("bicicletas")){
-		    	  this.in_bicicletastag=false;
-		      }else if( localName.equals("estado")){
-		    	  this.in_estadotag=false;
-		      }else if( localName.equals("lat")){
-		    	  this.in_lattag=false;
-		      }else if( localName.equals("lng")){
-		    	  this.in_lngtag=false;
-		      }
+		    	  this.in_paradatag=false;
+		      } 
+	       
 		super.endElement(uri, localName, qName);
 	}
 	
@@ -169,7 +150,7 @@ public class KMLSaxHandler extends DefaultHandler {
 		        ((BikeLane)currentElement).setIdLane(this.count);
 		        }else if(this.currentElement instanceof BikeStation){
 		        	((BikeStation)currentElement).setIdStation(count);
-			    	((BikeStation)currentElement).setNombre(new String(ch, start, length));
+			    //	((BikeStation)currentElement).setNombre(new String(ch, start, length));
 			  //  	Log.d("SAXHANDLER","Estamos creando el lane "+this.count+" con el nombre "+((BikeStation)currentElement).getNombre());
 		        }
 		                  
@@ -186,23 +167,6 @@ public class KMLSaxHandler extends DefaultHandler {
 		    	
 		        
 		        buffer.append(new String(ch,start,length));
-		    }else if(this.in_markertag){
-		    	
-		    }else if(this.in_bicicletastag){
-		    	
-		    	((BikeStation)currentElement).setBicicletas(Integer.valueOf(new String(ch, start, length)));
-		    }else if(this.in_candadostag){
-		    	
-		    	((BikeStation)currentElement).setCandados(Integer.valueOf(new String(ch, start, length)));
-		    }else if(this.in_estadotag){
-		    	
-		    	((BikeStation)currentElement).setEstado(Integer.valueOf(new String(ch, start, length)));
-		    }else if(this.in_lattag){
-		    	
-		    	((BikeStation)currentElement).setLat(Double.valueOf(new String(ch, start, length)));
-		    }else if(this.in_lngtag){
-		    	
-		    	((BikeStation)currentElement).setLng(Double.valueOf(new String(ch, start, length)));
 		    }
 	} 
 }

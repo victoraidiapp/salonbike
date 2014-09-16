@@ -20,7 +20,7 @@ public class DataManager {
 		public void onLanesResult(HashMap<Integer,BikeLane> result);
 		public void onBikeResult(HashMap<Integer,BikeStation> result);
 	}
-	public static final String BIKESTATIONURI="http://www.aidiapp.com/salonbike/bikestations.xml";
+	public static final String BIKESTATIONURI="https://clientes.domoblue.es/onroll_data/infoMarquesinas.php?key=bdedb8602218ecd22136f9546942b00e";
 	
 	public static void getLanes(final DataListener dataListener,AssetManager assetManager){
 		try {
