@@ -55,6 +55,7 @@ public class MainUI extends ActionBarActivity implements ActivityListener, Liste
 	private Menu m;
 	private Integer selectLane=null;
 	private boolean flagBikeStationLayer,flagBikeLaneLayer;
+	private CreditsDialog creditsDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,9 @@ public class MainUI extends ActionBarActivity implements ActivityListener, Liste
 	    // Update the action bar title with the TypefaceSpan instance
 	    ActionBar actionBar = this.getSupportActionBar();
 	    actionBar.setTitle(s);
-       
+	    actionBar.setDisplayHomeAsUpEnabled(true);
+	    //Creamos el dialogo de creditos
+	    this.creditsDialog=new CreditsDialog();
 		this.gestorFragment=this.getSupportFragmentManager();
 		/*DECLARAMOS EL MAP FRAGMENT*/
 		GoogleMapOptions mapaOpts=new GoogleMapOptions();
@@ -168,7 +171,7 @@ protected void onSaveInstanceState(Bundle outState) {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
+		//Log.d("MAINUI","Has seleccionado el id "+id+" y el de home es "+R.id.home+", "+R.id.homeAsUp);
 		if(id== R.id.btnShowBikeLanesList){
 			this.showLanesPage();
 			this.supportInvalidateOptionsMenu();
@@ -197,6 +200,11 @@ protected void onSaveInstanceState(Bundle outState) {
 		}
 		if(id==R.id.btnShowBikeStationNearest){
 			this.mapMngr.showNearestStation();
+			return true;
+		}
+		
+		if(id==android.R.id.home){
+			this.creditsDialog.show(gestorFragment, "creditsDialog");
 			return true;
 		}
 		
