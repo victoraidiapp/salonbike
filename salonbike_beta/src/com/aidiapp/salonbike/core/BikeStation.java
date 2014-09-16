@@ -103,7 +103,7 @@ public class BikeStation implements Serializable {
 			// TODO Auto-generated method stub
 			String r=null;
 			HttpClient httpCliente=new DefaultHttpClient();
-			HttpGet httpGet=new HttpGet("http://maps.googleapis.com/maps/api/directions/json?origin="+arg0[0].latitude+","+arg0[0].longitude+"&destination="+arg0[1].latitude+","+arg0[1].longitude+"&sensor=false");
+			HttpGet httpGet=new HttpGet("http://maps.googleapis.com/maps/api/directions/json?origin="+arg0[0].latitude+","+arg0[0].longitude+"&destination="+arg0[1].latitude+","+arg0[1].longitude+"&sensor=false&mode=walking");
 			HttpResponse response;
 			try {
 				response = httpCliente.execute(httpGet);
