@@ -323,11 +323,19 @@ public void onInitRouteToLane(Integer l) {
 	Location current=this.getMap().getMyLocation();
 	LatLng p=BikeLane.getNearestLanePosition(current, this.lanesZones.get(l).getCarriles());
 	Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
-	Intent intent = new Intent( Intent.ACTION_VIEW, 
+	/*Intent intent = new Intent( Intent.ACTION_VIEW, 
+			
             Uri.parse("http://ditu.google.cn/maps?f=d&source=s_d" +
             "&saddr="+current.getLatitude()+","+current.getLongitude()+"&daddr="+p.latitude+","+p.longitude+"&hl=zh&t=m&dirflg=w")); 
+Intent intent = new Intent( Intent.ACTION_VIEW, 
+			
+            Uri.parse("google.navigation:ll="+p.latitude+","+p.longitude+"&title="+this.lanesZones.get(l).getName()+"&mode=w")); 
+	
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");*/
+	String lauri="google.navigation:ll="+p.latitude+","+p.longitude+"&mode=w";
+	//Log.d("MAPMANAGER","Tratamos de abrir "+lauri);
+	Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(lauri));
     startActivity(intent);
 }
 
@@ -349,11 +357,15 @@ public void onInitRouteToStation(Integer l) {
 		Location current=this.getMap().getMyLocation();
 		LatLng p=this.bikeStations.get(l).getUbicacion();
 		Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
+		/*
 		Intent intent = new Intent( Intent.ACTION_VIEW, 
 	            Uri.parse("http://ditu.google.cn/maps?f=d&source=s_d" +
 	            "&saddr="+current.getLatitude()+","+current.getLongitude()+"&daddr="+p.latitude+","+p.longitude+"&hl=zh&t=m&dirflg=w")); 
 	    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-	    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+	    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");*/
+	    String lauri="google.navigation:ll="+p.latitude+","+p.longitude+"&mode=w";
+	//Log.d("MAPMANAGER","Tratamos de abrir "+lauri);
+	Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(lauri));
 	    startActivity(intent);
 }
 
