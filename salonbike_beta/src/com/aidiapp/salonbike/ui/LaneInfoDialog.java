@@ -75,7 +75,7 @@ s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
  @Override
  public void onCreate(Bundle savedInstanceState) {
      super.onCreate(savedInstanceState);
-     setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+     //setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
  }
 @Override
 public void onClick(DialogInterface arg0, int arg1) {
