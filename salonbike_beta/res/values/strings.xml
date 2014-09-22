@@ -2,47 +2,36 @@
 <resources>
 
     <string name="app_name">SalOnBike</string>
-    <string name="loading_content">Cargando contenido</string>
-    <string name="location_service">La aplicación &lt;b&gt;&quot;&lt;b&gt;&quot;Nuevo Parking Hospital@string/app_name&quot;&lt;/b&gt; solicita permiso para hacer uso del sistema de localización de su dispositivo.</string>
-    <string name="show_bikes_stations">Mostrar Estaciones</string>
-    <string name="hide_bikes_stations">Ocultar Estaciones</string>
-    <string name="back_to_map">Volver al mapa</string>
-    <string name="show_bikes_lanes">Mostrar Carril Bici</string>
-    <string name="hide_bikes_lanes">Ocultar Carril Bici</string>
-    <string name="bikes_lanes_list">Listado de carriles</string>
-    <string name="bikestation_route_nearest">Ruta estación más próxima</string>
-    <string name="bikelane_route_nearest">Ruta carril más próximo</string>
-    <string name="dialog_station_nearest">Distancia a estación:</string>  
-    <string name="dialog_detail_station_locks">Candados disponibles:</string>
-    <string name="dialog_detail_favorite_station">Favoritos</string>
-    <string name="dialog_detail_station_bikes">Bicis disponibles:</string>
-    <string name="dialog_detail_station_length">Distancia hasta estación;</string>
-    <string name="dialog_detail_line_lenght">Longitud del carril:</string>
-    <string name="dialog_detail_line_population">Bicis en tránsito:</string>
-    <string name="dialog_route">Ruta</string>
-    <string name="dialog_challenge">Reto</string>
-    <string name="settings">Configuración</string>
-    <string name="actions">Opciones</string>
-    <string name="menu_alerts">Alertas</string>
-    <string name="menu_utilities">Utilidades</string>
-    <string name="menu_poi_interest">Mis POInodes s</string>
-    <string name="menu_challenge">Mis retos</string>
-    <string name="menu_options_station">Intercambiadores</string>
-    <string name="menu_options_lines">Carril bici</string>        
-    <string name="action_settings">settings</string>
+    <string name="loading_content">Loading content</string>
+    <string name="show_bikes_stations">Show BikeStations</string>
+    <string name="hide_bikes_stations">Hide BikeStations</string>
+    <string name="back_to_map">Back to map</string>
+    <string name="show_bikes_lanes">Show Bike Lanes</string>
+    <string name="hide_bikes_lanes">Hide Bike Lanes</string>
+    <string name="bikes_lanes_list">Bike Lanes List</string>
+    <string name="bikestation_route_nearest">Route to nearest BikeStation</string>
+    <string name="bikelane_route_nearest">Route to nearest BikeLane</string>
+    <string name="dialog_station_nearest">Distance to BikeStation:</string>  
+    <string name="dialog_detail_station_locks">Availables locks:</string>
+    <string name="dialog_detail_favorite_station">Favourites</string>
+    <string name="dialog_detail_station_bikes">Availables Bikes:</string>
+    <string name="dialog_detail_station_length">Distance to Bikestation</string>
+    <string name="dialog_detail_line_lenght">Bikelane length</string>
+    
+    <string name="dialog_route">Route</string>
+    
+    <string name="menu_options_station">Bikestations</string>
+    <string name="menu_options_lines">Bikelanes</string>        
+    
     <string name="button_ok">OK</string>
-    <string name="english_language">Choose Language</string>
-    <string name="spanish_language">Seleccionar Idioma</string>
-    <string name="french_language">Choisissez la Langue</string>
-    <string name="german_language">Sprache Wählen</string>
-    <string name="button_back">Volver</string>
-    <string name="bikes_lane">Carriles Bici</string>
-    <string name="bikes_station">Estaciones Bici</string>
-    <string name="drawer_open">Menu Abierto</string>
-<string name="drawer_close">Menu Cerrado</string>
-<string name="credits">Créditos</string>
-<string name="developedby">Desarrollado por:</string>
-<string name="developers">Desarrolladores</string>
-<string name="thanksto">Agradecimientos:</string>
-<string name="todomoblue">A la empresa DomoBlue por proporcionarnos acceso a la API del servicio OnRoll y así poder mostrar información en tiempo real de los intercambiadores de bicicletas.</string>
+    
+    <string name="button_back">Back</string>
+    <string name="bikes_lane">Bikelanes</string>
+    <string name="bikes_station">Bikestations</string>
+    
+<string name="credits">Credits</string>
+<string name="developedby">Developed by:</string>
+<string name="developers">Developers:</string>
+<string name="thanksto">Thanks to:</string>
+<string name="todomoblue"> A la empresa DomoBlue por proporcionarnos acceso a la API del servicio OnRoll y así poder mostrar información en tiempo real de los intercambiadores de bicicletas.</string>
 </resources>

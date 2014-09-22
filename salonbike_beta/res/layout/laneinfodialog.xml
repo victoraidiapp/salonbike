@@ -165,30 +165,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/buttons_laneDialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" >
-
-        <Button
-            android:id="@+id/button_route"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:text="@string/dialog_route"
-            android:width="100sp" />
-
-        <Button
-            android:id="@+id/button_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:text="@string/dialog_challenge"
-            android:width="100sp" />
-    </LinearLayout>
+   
 
 </LinearLayout>

@@ -22,7 +22,7 @@
     <style name="Theme.Salonbike" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_salonbike</item>
         <item name="popupMenuStyle">@style/PopupMenu.Salonbike</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Salonbike</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Salonbike</item>
         
         <item name="actionDropDownStyle">@style/DropDownNav.Salonbike</item>
         <item name="actionBarStyle">@style/ActionBar.Solid.Salonbike</item>
@@ -36,14 +36,14 @@
     </style>
 
     <style name="ActionBar.Solid.Salonbike" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/ab_solid_salonbike</item>
+        <item name="android:background">@drawable/ab_solid_salonbike</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_salonbike</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_salonbike</item>
         
     </style>
 
     <style name="ActionBar.Transparent.Salonbike" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@drawable/ab_transparent_salonbike</item>
+        <item name="android:background">@drawable/ab_transparent_salonbike</item>
         
     </style>
 	
