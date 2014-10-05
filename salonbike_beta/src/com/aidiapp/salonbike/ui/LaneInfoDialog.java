@@ -70,8 +70,10 @@ if(savedInstanceState!=null){
 }else{
 	Log.d("BIKESTATIONDIALOG","Iniciamos el calculo de la distancia");
 	this.bl.calculator= this.bl.new DistanceCalculator(this);
-	
-	this.bl.calculator.execute(this.getCurrent(),BikeLane.getNearestLanePosition(new Location(this.getCurrent().toString()), this.bl.getCarriles()));
+	Location loc=new Location("");
+	loc.setLatitude(this.current.latitude);
+	loc.setLongitude(this.current.longitude);
+	this.bl.calculator.execute(this.getCurrent(),BikeLane.getNearestLanePosition(loc, this.bl.getCarriles()));
 }
 SpannableString s = new SpannableString(bl.getName());
 s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),
