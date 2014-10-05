@@ -227,6 +227,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 public void showBikeLaneInfoDialog(Integer lane){
 	
 	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
+	Location loc=this.getMap().getMyLocation();
+	this.laneInfoDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
 	this.laneInfoDialog.setListener(this);
 	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
 }

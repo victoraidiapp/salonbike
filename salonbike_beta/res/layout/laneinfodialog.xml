@@ -30,97 +30,10 @@
 
     </LinearLayout>
 
+    
+
     <LinearLayout
         android:id="@+id/first_children_stationDialog"
-        style="@android:style/Animation.Dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:minHeight="40dp"
-        android:minWidth="25dp"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="25dp"
-        android:visibility="gone" >
-
-        <ImageView
-            android:id="@+id/lock_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingRight="8dp"
-            android:src="@android:drawable/checkbox_on_background" />
-
-        <TextView
-            android:id="@+id/locks_availables"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:layout_weight="2"
-            android:text="@string/dialog_detail_line_population"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/candadosValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right|left"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="carga_valor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/second_children_stationDialog"
-        style="@android:style/Animation.Dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:minHeight="40dp"
-        android:minWidth="25dp"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:visibility="gone" >
-
-        <ImageView
-            android:id="@+id/icon_population_bikes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/dialog_detail_line_population"
-            android:paddingRight="3dp"
-            android:src="@drawable/bikes_availables_station" />
-
-        <TextView
-            android:id="@+id/available_bikes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:layout_weight="2"
-            android:text="@string/dialog_detail_line_population"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/bikesValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right|left"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="carga_valor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/third_children_stationDialog"
         style="@android:style/Animation.Dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,10 +51,9 @@
             android:id="@+id/icon_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="false"
+            
             android:contentDescription="@string/dialog_detail_station_length"
-            android:paddingRight="8sp"
+            
             android:src="@drawable/length" />
 
         <TextView
@@ -149,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
-            android:layout_weight="2"
+            android:layout_marginLeft="10dp"
             android:text="@string/dialog_detail_line_lenght"
             android:textSize="16sp" />
 
@@ -158,13 +70,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|left"
-            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:gravity="center|left"
             android:text="carga_valor"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/second_children_stationDialog"
+        style="@android:style/Animation.Dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:minHeight="40sp"
+        android:minWidth="25sp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="10sp"
+        android:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/icon_distance_to_lane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/dialog_detail_station_length"
+            android:src="@drawable/route_icon" 
+            />
+
+        <TextView
+            android:id="@+id/distance_to_lane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="@string/distance_to_lane"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:id="@+id/loadingDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:id="@+id/distanceToLane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right|left"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="carga_valor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
    
 
 </LinearLayout>
