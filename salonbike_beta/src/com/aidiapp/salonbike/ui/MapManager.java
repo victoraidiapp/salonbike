@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -55,7 +58,10 @@ import com.aidiapp.salonbike.ui.LaneInfoDialog.Listener;
 import com.aidiapp.salonbike.ui.utils.ImageUtils;
 import com.aidiapp.salonbike.ui.utils.TypefaceSpan;
 
-public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener, OnMarkerClickListener, Listener, com.aidiapp.salonbike.ui.BikeStationDialog.Listener {
+public class MapManager extends SupportMapFragment implements OnMapLoadedCallback,DataManager.DataListener,
+OnMarkerClickListener, Listener, com.aidiapp.salonbike.ui.BikeStationDialog.Listener,
+GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener {
 	private static final String SUPPORT_MAP_BUNDLE_KEY = "MapOptions";
 	public interface ActivityListener{
 		public void onLoadingContent(Boolean estado);
@@ -69,6 +75,7 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	private HashMap<Integer,PolyLineGroup>lanesZonesMaplines;
 	private Boolean flagLanesLayer=false;
 	private Boolean flagStationsLayer=false;
+	private LocationClient mLocationClient;
 	
 	private ViewGroup container;
 	private LaneInfoDialog laneInfoDialog;
@@ -97,6 +104,8 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 		this.laneInfoDialog=new LaneInfoDialog();
 		this.bikeStationDialog=new BikeStationDialog();
 		this.getMap().setOnMapLoadedCallback(this);
+		this.mLocationClient=new LocationClient(this.getActivity(),this,this);
+		this.mLocationClient.connect();
 		return r;
 	}
 	public void showLaneLayer() {
@@ -226,18 +235,23 @@ public class MapManager extends SupportMapFragment implements OnMapLoadedCallbac
 	}
 public void showBikeLaneInfoDialog(Integer lane){
 	
+		Log.d("MAPMANAGER","La localización está activada");
 	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
-	Location loc=this.getMap().getMyLocation();
+	Location loc=this.mLocationClient.getLastLocation();
+	Log.d("MAPMANAGER","La localización es "+String.valueOf(loc.getLatitude()));
 	this.laneInfoDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
 	this.laneInfoDialog.setListener(this);
 	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
+	
+	
 }
 	@Override
 	public void onMapLoaded() {
 		// TODO Auto-generated method stub
+		Log.d("MAPMANAGER","El mapa ya está cargado");
 		this.getActivityListener().onLoadingMap(false);
 		LinearLayout.LayoutParams llp=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-		this.getMap().setMyLocationEnabled(true);
+		//this.getMap().setMyLocationEnabled(true);
 		this.getMap().setOnMarkerClickListener(this);
 		if(this.flagLanesLayer){
 			Log.d("MAPMANAGER","Tenemos que mostrar la capa de carriles");
@@ -248,6 +262,8 @@ public void showBikeLaneInfoDialog(Integer lane){
 		if(this.flagStationsLayer){
 			this.showBikeStationsLayer();
 		}
+		
+		
 		
 	}
 
@@ -292,7 +308,8 @@ private void showBikeStationInfoDialog(int i) {
 	BikeStation bs=this.bikeStations.get(Integer.valueOf(i-100));
 	Log.d("MAPMANAGER","La station es "+bs.getNombre());
 	this.bikeStationDialog.setBikeStation(bs);
-	Location loc=this.getMap().getMyLocation();
+	//Location loc=this.getMap().getMyLocation();
+	Location loc=this.mLocationClient.getLastLocation();
 	this.bikeStationDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
 	this.bikeStationDialog.setListener(this);
 	this.bikeStationDialog.show(getFragmentManager(), "BikeStationInfoDialog");
@@ -308,11 +325,18 @@ public void onAttach(Activity activity) {
 	
 	super.onAttach(activity);
 }
+@Override
+public void onDetach() {
+	// TODO Auto-generated method stub
+	this.mLocationClient.disconnect();
+	super.onDetach();
+}
 
 
 public void showNearestLane() {
 	// TODO Auto-generated method stub
-	Location loc=this.getMap().getMyLocation();
+	//Location loc=this.getMap().getMyLocation();
+	Location loc=this.mLocationClient.getLastLocation();
 	int l=BikeLane.getNearestLane(loc, this.lanesZones);
 	Log.d("MAPAMANAGER", "El lane más cercano es "+l);
 	this.showBikeLaneInfoDialog(l);
@@ -322,7 +346,8 @@ public void showNearestLane() {
 @Override
 public void onInitRouteToLane(Integer l) {
 	// TODO Auto-generated method stub
-	Location current=this.getMap().getMyLocation();
+	//Location current=this.getMap().getMyLocation();
+	Location current=this.mLocationClient.getLastLocation();
 	LatLng p=BikeLane.getNearestLanePosition(current, this.lanesZones.get(l).getCarriles());
 	Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
 	/*Intent intent = new Intent( Intent.ACTION_VIEW, 
@@ -356,7 +381,8 @@ public void onBikeResult(HashMap<Integer, BikeStation> result) {
 public void onInitRouteToStation(Integer l) {
 	// TODO Auto-generated method stub
 	// TODO Auto-generated method stub
-		Location current=this.getMap().getMyLocation();
+		//Location current=this.getMap().getMyLocation();
+	Location loc=this.mLocationClient.getLastLocation();
 		LatLng p=this.bikeStations.get(l).getUbicacion();
 		Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
 		/*
@@ -375,11 +401,34 @@ public void onInitRouteToStation(Integer l) {
 public void showNearestStation() {
 	// TODO Auto-generated method stub
 	// TODO Auto-generated method stub
-		Location loc=this.getMap().getMyLocation();
+		//Location loc=this.getMap().getMyLocation();
+		Location loc=this.mLocationClient.getLastLocation();
 		int l=BikeStation.getNearestStation(loc, this.bikeStations);
 		Log.d("MAPAMANAGER", "La station más cercano es "+l);
 		this.showBikeStationInfoDialog(l+100);
 }
+
+
+@Override
+public void onConnectionFailed(ConnectionResult arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void onConnected(Bundle connectionHint) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void onDisconnected() {
+	// TODO Auto-generated method stub
+	
+}
+
 
 
 
