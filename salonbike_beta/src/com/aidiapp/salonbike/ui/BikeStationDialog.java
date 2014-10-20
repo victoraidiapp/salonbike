@@ -68,8 +68,10 @@ if(savedInstanceState!=null){
 	
 }else{
 	Log.d("BIKESTATIONDIALOG","Iniciamos el calculo de la distancia");
+	if(this.current!=null){
 	this.bikeStation.calculador= this.bikeStation.new DistanceCalculator(this);
 	this.bikeStation.calculador.execute(this.current,this.bikeStation.getUbicacion());
+	}
 }
 SpannableString s = new SpannableString(this.bikeStation.getNombre());
 s.setSpan(new TypefaceSpan(this.getActivity(), "vitor.otf"), 0, s.length(),

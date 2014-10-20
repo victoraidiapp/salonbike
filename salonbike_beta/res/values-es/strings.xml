@@ -34,4 +34,5 @@
 <string name="developers">Desarrolladores</string>
 <string name="thanksto">Agradecimientos:</string>
 <string name="todomoblue">A la empresa DomoBlue por proporcionarnos acceso a la API del servicio OnRoll y así poder mostrar información en tiempo real de los intercambiadores de bicicletas.</string>
+<string name="activeLocationService">Por favor, active el servicio de localización de alta precisión.</string>
 </resources>

@@ -49,6 +49,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aidiapp.salonbike.R;
 import com.aidiapp.salonbike.core.BikeLane;
@@ -237,9 +238,15 @@ public void showBikeLaneInfoDialog(Integer lane){
 	
 		Log.d("MAPMANAGER","La localización está activada");
 	this.laneInfoDialog.setBikeLane(this.lanesZones.get(lane));
-	Location loc=this.mLocationClient.getLastLocation();
+	Location loc=this.getMyLoc();
+	if(loc==null){
+		Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+	}else{
 	Log.d("MAPMANAGER","La localización es "+String.valueOf(loc.getLatitude()));
 	this.laneInfoDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
+	}
 	this.laneInfoDialog.setListener(this);
 	this.laneInfoDialog.show(getFragmentManager(), "BikeLaneInfoDialog");
 	
@@ -309,8 +316,16 @@ private void showBikeStationInfoDialog(int i) {
 	Log.d("MAPMANAGER","La station es "+bs.getNombre());
 	this.bikeStationDialog.setBikeStation(bs);
 	//Location loc=this.getMap().getMyLocation();
-	Location loc=this.mLocationClient.getLastLocation();
-	this.bikeStationDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
+	
+	Location loc=this.getMyLoc();
+	if(loc==null){
+		Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+	}else{
+		this.bikeStationDialog.setCurrent(new LatLng(loc.getLatitude(),loc.getLongitude()));
+	}
+	
 	this.bikeStationDialog.setListener(this);
 	this.bikeStationDialog.show(getFragmentManager(), "BikeStationInfoDialog");
 	}
@@ -336,10 +351,16 @@ public void onDetach() {
 public void showNearestLane() {
 	// TODO Auto-generated method stub
 	//Location loc=this.getMap().getMyLocation();
-	Location loc=this.mLocationClient.getLastLocation();
+	Location loc=this.getMyLoc();
+	if(loc==null){
+		Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+	}else{
 	int l=BikeLane.getNearestLane(loc, this.lanesZones);
 	Log.d("MAPAMANAGER", "El lane más cercano es "+l);
 	this.showBikeLaneInfoDialog(l);
+	}
 }
 
 
@@ -347,8 +368,13 @@ public void showNearestLane() {
 public void onInitRouteToLane(Integer l) {
 	// TODO Auto-generated method stub
 	//Location current=this.getMap().getMyLocation();
-	Location current=this.mLocationClient.getLastLocation();
-	LatLng p=BikeLane.getNearestLanePosition(current, this.lanesZones.get(l).getCarriles());
+	Location loc=this.getMyLoc();
+	if(loc==null){
+		Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+	}else{
+	LatLng p=BikeLane.getNearestLanePosition(loc, this.lanesZones.get(l).getCarriles());
 	Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
 	/*Intent intent = new Intent( Intent.ACTION_VIEW, 
 			
@@ -364,6 +390,7 @@ Intent intent = new Intent( Intent.ACTION_VIEW,
 	//Log.d("MAPMANAGER","Tratamos de abrir "+lauri);
 	Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(lauri));
     startActivity(intent);
+	}
 }
 
 
@@ -382,7 +409,12 @@ public void onInitRouteToStation(Integer l) {
 	// TODO Auto-generated method stub
 	// TODO Auto-generated method stub
 		//Location current=this.getMap().getMyLocation();
-	Location loc=this.mLocationClient.getLastLocation();
+	Location loc=this.getMyLoc();
+	if(loc==null){
+		Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
+	}else{
 		LatLng p=this.bikeStations.get(l).getUbicacion();
 		Log.d("MAP MANAGER","El punto más cercano es "+p.toString());
 		/*
@@ -395,6 +427,7 @@ public void onInitRouteToStation(Integer l) {
 	//Log.d("MAPMANAGER","Tratamos de abrir "+lauri);
 	Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(lauri));
 	    startActivity(intent);
+	}
 }
 
 
@@ -402,24 +435,30 @@ public void showNearestStation() {
 	// TODO Auto-generated method stub
 	// TODO Auto-generated method stub
 		//Location loc=this.getMap().getMyLocation();
-		Location loc=this.mLocationClient.getLastLocation();
+		Location loc=this.getMyLoc();
+		if(loc==null){
+			Toast t=Toast.makeText(this.getActivity(), R.string.activeLocationService, Toast.LENGTH_LONG);
+			t.setGravity(Gravity.CENTER, 0, 0);
+			t.show();
+		}else{
 		int l=BikeStation.getNearestStation(loc, this.bikeStations);
 		Log.d("MAPAMANAGER", "La station más cercano es "+l);
 		this.showBikeStationInfoDialog(l+100);
+		}
 }
 
 
 @Override
 public void onConnectionFailed(ConnectionResult arg0) {
 	// TODO Auto-generated method stub
-	
+	Log.d("MAPMANAGER","No hemos podido conectar con el location service");
 }
 
 
 @Override
 public void onConnected(Bundle connectionHint) {
 	// TODO Auto-generated method stub
-	
+	Log.d("MAPMANAGER","Nos hemos podido conectar con el location service");
 }
 
 
@@ -429,7 +468,20 @@ public void onDisconnected() {
 	
 }
 
-
+private Location getMyLoc(){
+	Location loc=this.mLocationClient.getLastLocation();
+	if(loc!=null){
+		Log.d("MAPMANAGER","El locationclient da una localización");
+		return loc;
+	}else{
+		this.getMap().setMyLocationEnabled(true);
+		
+		loc=this.getMap().getMyLocation();
+		//this.getMap().setMyLocationEnabled(false);
+		return loc;
+	}
+	
+}
 
 
 	
